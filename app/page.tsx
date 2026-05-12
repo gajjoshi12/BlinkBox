@@ -1,4 +1,4 @@
-import Room from "@/components/Room";
+import Room3DWrapper from "@/components/Room3DWrapper";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import Philosophy from "@/components/Philosophy";
@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <main className="relative min-h-screen overflow-x-clip">
       <Preloader />
-      <Room />
+      <Room3DWrapper />
       <DustMotes />
 
       <Navigation />
