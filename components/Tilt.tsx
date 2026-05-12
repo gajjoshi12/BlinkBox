@@ -1,12 +1,16 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
 import { useRef } from "react";
 import { useIsTouch } from "@/lib/useMedia";
 
 /**
  * 3D tilt wrapper. Tilts the child based on cursor position over it.
  * Also reveals a spotlight gradient at the cursor location.
+ *
+ * NOTE: all hooks must run unconditionally before any early return — otherwise
+ * the hook count differs once `useIsTouch` resolves to `true` on touch devices
+ * and React throws #300 ("Rendered more hooks than during the previous render").
  */
 export default function Tilt({
   children,
@@ -30,8 +34,14 @@ export default function Tilt({
     stiffness: 220,
     damping: 18,
   });
-  const spotX = useTransform(mx, (v) => `${v * 100}%`);
-  const spotY = useTransform(my, (v) => `${v * 100}%`);
+
+  // Combined spotlight gradient — hoisted above the early return so the hook
+  // call is always made, regardless of pointer type.
+  const spotlight = useTransform(
+    [mx, my] as unknown as MotionValue<number>[],
+    ([x, y]: number[]) =>
+      `radial-gradient(380px circle at ${x * 100}% ${y * 100}%, rgba(var(--lamp-glow), 0.16), transparent 55%)`
+  );
 
   const handleMove = (e: React.MouseEvent) => {
     const el = ref.current;
@@ -58,16 +68,9 @@ export default function Tilt({
       style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
       className={`relative ${className}`}
     >
-      {/* Spotlight follows cursor */}
       <motion.div
         className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background: useTransform(
-            [spotX, spotY] as any,
-            ([x, y]: any) =>
-              `radial-gradient(380px circle at ${x} ${y}, rgba(var(--lamp-glow), 0.16), transparent 55%)`
-          ),
-        }}
+        style={{ background: spotlight }}
       />
       <div style={{ transform: "translateZ(20px)" }}>{children}</div>
     </motion.div>
