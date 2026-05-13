@@ -32,9 +32,28 @@ function useScrollProgress() {
   return ref;
 }
 
+/** Tracks normalized cursor offset (-1..1 on each axis) for camera parallax. */
+function useCursor() {
+  const ref = useRef({ x: 0, y: 0 });
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      ref.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      ref.current.y = -((e.clientY / window.innerHeight) * 2 - 1);
+    };
+    window.addEventListener("mousemove", move);
+    return () => window.removeEventListener("mousemove", move);
+  }, []);
+  return ref;
+}
+
 function smoothstep(a: number, b: number, v: number) {
   const t = Math.max(0, Math.min(1, (v - a) / (b - a)));
   return t * t * (3 - 2 * t);
+}
+
+/** Frame-rate-independent damping. tau is the time constant in seconds. */
+function damp(current: number, target: number, tau: number, delta: number) {
+  return current + (target - current) * (1 - Math.exp(-delta / tau));
 }
 
 /* ============================================================ */
@@ -162,8 +181,10 @@ function GrassPatch({
 
 function FuturisticArc({
   intensityRef,
+  scrollRef,
 }: {
   intensityRef: React.MutableRefObject<number>;
+  scrollRef: React.MutableRefObject<number>;
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const sphereRef = useRef<THREE.Mesh>(null);
@@ -175,10 +196,18 @@ function FuturisticArc({
   useFrame((state, delta) => {
     if (!groupRef.current) return;
     const t = state.clock.elapsedTime;
-    // 3D revolution — multi-axis tumble so all sides of the lamp are revealed
-    groupRef.current.rotation.y += delta * 0.32;
-    groupRef.current.rotation.x = Math.sin(t * 0.42) * 0.22;
-    groupRef.current.rotation.z = Math.cos(t * 0.36) * 0.16;
+    const p = scrollRef.current;
+    // Scroll-coupled 3D revolution — scrolling drives a big tumble while time
+    // adds slow ambient drift. Damped toward target for that motion-website
+    // ease-out feel.
+    const targetY = p * Math.PI * 2.5 + t * 0.06;
+    const targetX = Math.sin(t * 0.3 + p * 4) * 0.2 + p * 0.18;
+    const targetZ = Math.cos(t * 0.24 + p * 3) * 0.16;
+    const subtleFloat = Math.sin(t * 0.6) * 0.04;
+    groupRef.current.rotation.y = damp(groupRef.current.rotation.y, targetY, 0.18, delta);
+    groupRef.current.rotation.x = damp(groupRef.current.rotation.x, targetX, 0.32, delta);
+    groupRef.current.rotation.z = damp(groupRef.current.rotation.z, targetZ, 0.32, delta);
+    groupRef.current.position.y = damp(groupRef.current.position.y, subtleFloat, 0.5, delta);
     const I = intensityRef.current;
     const pulse = 0.95 + Math.sin(t * 1.3) * 0.05;
 
@@ -367,9 +396,11 @@ function FuturisticArc({
 function ClassicalChandelier({
   color,
   intensityRef,
+  scrollRef,
 }: {
   color: THREE.Color;
   intensityRef: React.MutableRefObject<number>;
+  scrollRef: React.MutableRefObject<number>;
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const bulbRefs = useRef<(THREE.Mesh | null)[]>([]);
@@ -381,10 +412,16 @@ function ClassicalChandelier({
   useFrame((state, delta) => {
     if (!groupRef.current) return;
     const t = state.clock.elapsedTime;
-    // 3D revolution — opposite direction to the arc lamp + multi-axis tilt
-    groupRef.current.rotation.y -= delta * 0.28;
-    groupRef.current.rotation.x = Math.sin(t * 0.38) * 0.18;
-    groupRef.current.rotation.z = Math.cos(t * 0.45) * 0.15;
+    const p = scrollRef.current;
+    // Counter-rotates the arc lamp — scroll drives main spin, time adds drift.
+    const targetY = -p * Math.PI * 2.2 - t * 0.05;
+    const targetX = Math.sin(t * 0.28 + p * 3) * 0.18 - p * 0.12;
+    const targetZ = Math.cos(t * 0.32 + p * 2) * 0.15;
+    const subtleFloat = Math.cos(t * 0.55) * 0.05;
+    groupRef.current.rotation.y = damp(groupRef.current.rotation.y, targetY, 0.2, delta);
+    groupRef.current.rotation.x = damp(groupRef.current.rotation.x, targetX, 0.32, delta);
+    groupRef.current.rotation.z = damp(groupRef.current.rotation.z, targetZ, 0.32, delta);
+    groupRef.current.position.y = damp(groupRef.current.position.y, subtleFloat, 0.5, delta);
     const I = intensityRef.current;
     const pulse = 0.93 + Math.sin(t * 1.5) * 0.07;
 
@@ -571,6 +608,7 @@ function ClassicalChandelier({
 
 function Scene() {
   const scrollRef = useScrollProgress();
+  const cursorRef = useCursor();
 
   // Brand colours — locked, not Kelvin-driven. Left lamp = coral, right = plum.
   const plumColor = useMemo(() => new THREE.Color("#c895d0"), []);
@@ -578,9 +616,15 @@ function Scene() {
   const intensityFuturistic = useRef(0);
   const intensityChandelier = useRef(0);
   const target = useRef({ a: 0, b: 0 });
+  // Smoothed scroll progress — gives every scroll-driven motion that motion-
+  // website "weight" and momentum, so quick scrolls aren't jerky.
+  const smoothScrollRef = useRef(0);
 
   useFrame((state, delta) => {
-    const p = scrollRef.current;
+    // Smooth the raw scroll input first — everything reads from this
+    smoothScrollRef.current = damp(smoothScrollRef.current, scrollRef.current, 0.18, delta);
+    const p = smoothScrollRef.current;
+    const t = state.clock.elapsedTime;
 
     // Both lamps brighten with scroll, but with a small baseline so the
     // chrome / brass / orb are always visible — never pitch black.
@@ -588,9 +632,19 @@ function Scene() {
     target.current.a = baseline + smoothstep(0.02, 0.5, p) * 1.1 + smoothstep(0.5, 0.95, p) * 0.6;
     target.current.b = baseline + smoothstep(0.12, 0.6, p) * 1.1 + smoothstep(0.6, 0.95, p) * 0.6;
 
-    const k = Math.min(1, delta * 4);
-    intensityFuturistic.current += (target.current.a - intensityFuturistic.current) * k;
-    intensityChandelier.current += (target.current.b - intensityChandelier.current) * k;
+    // Exponential damping toward target intensity (frame-rate independent)
+    intensityFuturistic.current = damp(intensityFuturistic.current, target.current.a, 0.22, delta);
+    intensityChandelier.current = damp(intensityChandelier.current, target.current.b, 0.22, delta);
+
+    // Camera — subtle parallax with cursor + scroll-driven dolly + slow bob
+    const cam = state.camera;
+    const targetX = cursorRef.current.x * 0.5;
+    const targetY = 0.6 + cursorRef.current.y * 0.3 + Math.sin(t * 0.25) * 0.06;
+    const targetZ = 12 - p * 1.4;
+    cam.position.x = damp(cam.position.x, targetX, 0.5, delta);
+    cam.position.y = damp(cam.position.y, targetY, 0.5, delta);
+    cam.position.z = damp(cam.position.z, targetZ, 0.6, delta);
+    cam.lookAt(0, 0.6, 0);
   });
 
   return (
@@ -598,27 +652,17 @@ function Scene() {
       {/* LEFT — futuristic arc lamp, HUGE and pushed off-screen left so only the
           arc + glowing orb spill into the visible area */}
       <group position={[-7.2, -0.8, 0]} scale={1.9}>
-        <FuturisticArc intensityRef={intensityFuturistic} />
+        <FuturisticArc intensityRef={intensityFuturistic} scrollRef={smoothScrollRef} />
       </group>
-      {/* Left grass — in visible centered area, illuminated by the arc lamp */}
-      <GrassPatch
-        position={[-3.4, -3.0, 0.5]}
-        bladeColor="#3a6a3a"
-        groundColor="#1a1410"
-        radius={1.7}
-      />
 
       {/* RIGHT — classical brass chandelier, HUGE and pushed off-screen right */}
       <group position={[7.2, 0.4, 0]} scale={1.9}>
-        <ClassicalChandelier color={plumColor} intensityRef={intensityChandelier} />
+        <ClassicalChandelier
+          color={plumColor}
+          intensityRef={intensityChandelier}
+          scrollRef={smoothScrollRef}
+        />
       </group>
-      {/* Right grass */}
-      <GrassPatch
-        position={[3.4, -3.0, 0.5]}
-        bladeColor="#4a7a4a"
-        groundColor="#1a1208"
-        radius={1.65}
-      />
 
       {/* Brighter baseline ambient — silhouettes always visible */}
       <ambientLight intensity={0.22} color="#5a78a8" />
