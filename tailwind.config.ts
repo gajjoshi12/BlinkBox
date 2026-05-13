@@ -9,16 +9,33 @@ const config: Config = {
     extend: {
       colors: {
         void: "#0a0606",
-        ink: "#1a1208",
+        ink: "#2a2024",
+        // Brand palette — BLINK BOX STUDIO
+        coral: {
+          DEFAULT: "#e55a4e",
+          soft: "#ff8a78",
+          deep: "#a83a30",
+        },
+        plum: {
+          DEFAULT: "#9b5ba5",
+          soft: "#c895d0",
+          deep: "#5e3568",
+        },
+        sky: {
+          DEFAULT: "#3b6bb0",
+          soft: "#6b94d4",
+          deep: "#1f4480",
+        },
+        // Aliases so legacy class references still resolve
         gold: {
-          DEFAULT: "#d4a24a",
-          soft: "#f5e6c8",
-          deep: "#8a6020",
+          DEFAULT: "#e55a4e",
+          soft: "#ff8a78",
+          deep: "#a83a30",
         },
         moon: {
-          DEFAULT: "#8ab4d4",
-          soft: "#e8f1ff",
-          deep: "#2a4566",
+          DEFAULT: "#9b5ba5",
+          soft: "#c895d0",
+          deep: "#5e3568",
         },
       },
       fontFamily: {

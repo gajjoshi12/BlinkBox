@@ -1,11 +1,9 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, ContactShadows } from "@react-three/drei";
+import { ContactShadows } from "@react-three/drei";
 import { useRef, useEffect, useMemo, Suspense } from "react";
 import * as THREE from "three";
-import { useTemperature } from "../TemperatureProvider";
-import { kelvinToRgb } from "@/lib/kelvin";
 
 /* ============================================================
    LampScene — two distinct lamps on opposite horizontal ends.
@@ -291,8 +289,8 @@ function FuturisticArc({
       >
         <torusGeometry args={[0.5, 0.022, 14, 64]} />
         <meshStandardMaterial
-          color="#ffffff"
-          emissive="#dceaff"
+          color="#ffe8e2"
+          emissive="#ff8a78"
           emissiveIntensity={0}
           toneMapped={false}
         />
@@ -300,18 +298,18 @@ function FuturisticArc({
       <pointLight
         ref={ringLightRef}
         position={[orbX, orbY - 0.55, 0]}
-        color="#dceaff"
+        color="#ff8a78"
         intensity={0}
         distance={3.5}
         decay={2}
       />
 
-      {/* THE GLOWING ORB — large frosted glass sphere */}
+      {/* THE GLOWING ORB — large frosted glass sphere, tinted coral */}
       <mesh ref={sphereRef} position={[orbX, orbY, 0]} castShadow>
         <sphereGeometry args={[0.5, 64, 64]} />
         <meshPhysicalMaterial
-          color="#ffffff"
-          emissive="#f4f8ff"
+          color="#ffe8e2"
+          emissive="#ff8a78"
           emissiveIntensity={0}
           roughness={0.06}
           metalness={0}
@@ -324,22 +322,22 @@ function FuturisticArc({
         />
       </mesh>
 
-      {/* Inner bright core inside the orb (visible through transmission) */}
+      {/* Inner bright core inside the orb — coral filament */}
       <mesh position={[orbX, orbY, 0]}>
         <sphereGeometry args={[0.18, 24, 24]} />
         <meshStandardMaterial
           color="#ffffff"
-          emissive="#ffffff"
+          emissive="#ff9080"
           emissiveIntensity={6}
           toneMapped={false}
         />
       </mesh>
 
-      {/* Orb halo — additive glow shell */}
+      {/* Orb halo — additive coral glow shell */}
       <mesh ref={haloRef} position={[orbX, orbY, 0]}>
         <sphereGeometry args={[1.4, 24, 24]} />
         <meshBasicMaterial
-          color="#e8efff"
+          color="#ff8a78"
           transparent
           opacity={0}
           depthWrite={false}
@@ -347,11 +345,11 @@ function FuturisticArc({
         />
       </mesh>
 
-      {/* The real cool-white point light */}
+      {/* The real coral point light */}
       <pointLight
         ref={lightRef}
         position={[orbX, orbY, 0]}
-        color="#e6efff"
+        color="#ff7060"
         intensity={0}
         distance={11}
         decay={2}
@@ -573,12 +571,9 @@ function ClassicalChandelier({
 
 function Scene() {
   const scrollRef = useScrollProgress();
-  const { kelvin } = useTemperature();
 
-  const warmColor = useMemo(() => {
-    const [r, g, b] = kelvinToRgb(kelvin);
-    return new THREE.Color(r / 255, g / 255, b / 255);
-  }, [kelvin]);
+  // Brand colours — locked, not Kelvin-driven. Left lamp = coral, right = plum.
+  const plumColor = useMemo(() => new THREE.Color("#c895d0"), []);
 
   const intensityFuturistic = useRef(0);
   const intensityChandelier = useRef(0);
@@ -615,7 +610,7 @@ function Scene() {
 
       {/* RIGHT — classical brass chandelier, HUGE and pushed off-screen right */}
       <group position={[7.2, 0.4, 0]} scale={1.9}>
-        <ClassicalChandelier color={warmColor} intensityRef={intensityChandelier} />
+        <ClassicalChandelier color={plumColor} intensityRef={intensityChandelier} />
       </group>
       {/* Right grass */}
       <GrassPatch

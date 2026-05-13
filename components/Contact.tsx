@@ -37,17 +37,7 @@ export default function Contact() {
                 Studio
               </div>
               <div className="text-white/80">
-                14 Rue de Sèvres
-                <br />
-                75007 Paris, France
-              </div>
-            </div>
-            <div>
-              <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-2">
-                Atelier
-              </div>
-              <div className="text-white/80">
-                Studio City Loft 4B
+                Blink Box Studio
                 <br />
                 Mumbai 400070, India
               </div>
@@ -57,10 +47,10 @@ export default function Contact() {
                 Direct
               </div>
               <a
-                href="mailto:atelier@lumiere.studio"
+                href="mailto:hello@blinkbox.studio"
                 className="text-white/90 hover:text-[rgb(var(--lamp-glow))] transition-colors"
               >
-                atelier@lumiere.studio
+                hello@blinkbox.studio
               </a>
             </div>
           </div>

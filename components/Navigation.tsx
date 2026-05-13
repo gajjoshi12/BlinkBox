@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import Image from "next/image";
 import Magnetic from "./Magnetic";
 
 const links = [
@@ -32,19 +33,27 @@ export default function Navigation() {
       >
         <div className="mx-auto max-w-[1400px] px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
           <a href="#top" className="group flex items-center gap-2 md:gap-3">
-            <span className="relative flex items-center justify-center w-6 h-6 md:w-7 md:h-7">
+            <span className="relative flex items-center justify-center w-9 h-9 md:w-11 md:h-11">
               <motion.span
                 className="absolute inset-0 rounded-full"
                 style={{
-                  background: "radial-gradient(circle, rgb(var(--lamp-glow)) 0%, transparent 70%)",
+                  background:
+                    "radial-gradient(circle, rgb(var(--lamp-glow)) 0%, transparent 70%)",
                 }}
-                animate={{ scale: [1, 1.4, 1], opacity: [0.5, 0.9, 0.5] }}
-                transition={{ duration: 3, repeat: Infinity }}
+                animate={{ scale: [1, 1.35, 1], opacity: [0.4, 0.75, 0.4] }}
+                transition={{ duration: 3.2, repeat: Infinity }}
               />
-              <span className="relative w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[rgb(var(--lamp-glow))] shadow-[0_0_12px_rgb(var(--lamp-glow))]" />
+              <Image
+                src="/logo.png"
+                alt="Blink Box Studio"
+                width={44}
+                height={44}
+                className="relative w-full h-full object-contain drop-shadow-[0_0_8px_rgba(229,90,78,0.45)]"
+                priority
+              />
             </span>
             <span className="font-display text-lg md:text-2xl tracking-[0.18em] md:tracking-[0.2em] text-white/95 group-hover:tracking-[0.28em] transition-all duration-500">
-              LUMIÈRE
+              BLINK BOX
             </span>
           </a>
 
@@ -97,7 +106,7 @@ export default function Navigation() {
             className="md:hidden fixed inset-0 z-50 bg-black/95 backdrop-blur-xl"
           >
             <div className="flex items-center justify-between h-16 px-5 border-b border-white/10">
-              <span className="font-display text-lg tracking-[0.18em] text-white/95">LUMIÈRE</span>
+              <span className="font-display text-lg tracking-[0.18em] text-white/95">BLINK BOX</span>
               <button
                 onClick={() => setOpen(false)}
                 className="w-9 h-9 flex items-center justify-center text-white/75 text-xl"
@@ -142,7 +151,7 @@ export default function Navigation() {
                 Begin a Project →
               </a>
               <div className="mt-8 text-center text-[10px] uppercase tracking-[0.3em] text-white/30">
-                Paris · Mumbai · By appointment
+                Mumbai · By appointment
               </div>
             </motion.div>
           </motion.div>

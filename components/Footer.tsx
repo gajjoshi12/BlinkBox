@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -8,17 +9,23 @@ export default function Footer() {
       <div className="relative z-10 mx-auto max-w-[1400px] grid md:grid-cols-12 gap-12">
         <div className="md:col-span-5">
           <a href="#top" className="inline-flex items-center gap-3 mb-6">
-            <span className="relative flex items-center justify-center w-7 h-7">
+            <span className="relative flex items-center justify-center w-11 h-11">
               <span className="absolute inset-0 rounded-full"
                 style={{ background: "radial-gradient(circle, rgb(var(--lamp-glow)) 0%, transparent 70%)" }}
               />
-              <span className="relative w-2 h-2 rounded-full bg-[rgb(var(--lamp-glow))] shadow-[0_0_12px_rgb(var(--lamp-glow))]" />
+              <Image
+                src="/logo.png"
+                alt="Blink Box Studio"
+                width={44}
+                height={44}
+                className="relative w-full h-full object-contain drop-shadow-[0_0_8px_rgba(229,90,78,0.4)]"
+              />
             </span>
-            <span className="font-display text-2xl tracking-[0.2em]">LUMIÈRE</span>
+            <span className="font-display text-2xl tracking-[0.2em]">BLINK BOX</span>
           </a>
           <p className="text-white/45 text-sm leading-relaxed max-w-sm">
-            Architectural lighting design for the world's most considered
-            interiors. Atelier in Paris, studio in Mumbai. By appointment.
+            BLINK BOX Studio designs bespoke lighting for the world's most considered
+            interiors. Studio in Mumbai. By appointment.
           </p>
         </div>
 
@@ -62,7 +69,7 @@ export default function Footer() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-[1400px] mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.3em] text-white/30">
-        <div>© 2026 Lumière Atelier · All rights reserved</div>
+        <div>© 2026 Blink Box Studio · All rights reserved</div>
         <motion.div
           animate={{ opacity: [0.3, 0.8, 0.3] }}
           transition={{ duration: 4, repeat: Infinity }}

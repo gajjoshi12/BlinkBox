@@ -19,9 +19,13 @@ const sans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "LUMIÈRE — Architectural Lighting for the Discerning",
+  title: "BLINK BOX STUDIO — Lighting Design",
   description:
-    "Bespoke lighting design for private residences, hospitality, and corporate spaces. We design atmosphere.",
+    "BLINK BOX Studio designs bespoke lighting for private residences, hospitality, and corporate spaces. We design atmosphere.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export const viewport: Viewport = {

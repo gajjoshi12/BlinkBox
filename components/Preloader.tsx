@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Preloader() {
   const [phase, setPhase] = useState<0 | 1 | 2 | 3>(0); // 0 dark, 1 dot, 2 word, 3 done
@@ -44,17 +45,29 @@ export default function Preloader() {
             }}
           />
 
-          {/* The single filament */}
+          {/* The logo — replaces the filament dot */}
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{
               scale: phase >= 1 ? 1 : 0,
               opacity: phase >= 1 ? (phase >= 2 ? 0 : 1) : 0,
             }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute w-3 h-3 rounded-full bg-[rgb(var(--lamp-core))]"
-            style={{ boxShadow: "0 0 60px rgb(var(--lamp-glow))" }}
-          />
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute"
+            style={{
+              filter:
+                "drop-shadow(0 0 32px rgba(229, 90, 78, 0.55)) drop-shadow(0 0 12px rgba(155, 91, 165, 0.4))",
+            }}
+          >
+            <Image
+              src="/logo.png"
+              alt="Blink Box Studio"
+              width={140}
+              height={140}
+              priority
+              className="w-28 h-28 md:w-36 md:h-36 object-contain"
+            />
+          </motion.div>
 
           {/* Wordmark — fades up from the dot */}
           <motion.div
@@ -68,7 +81,7 @@ export default function Preloader() {
             className="relative z-10 text-center"
           >
             <div className="font-display text-5xl md:text-7xl tracking-[0.3em] text-white/95">
-              LUMIÈRE
+              BLINK BOX
             </div>
             <motion.div
               initial={{ opacity: 0, y: 8 }}
@@ -76,7 +89,7 @@ export default function Preloader() {
               transition={{ duration: 0.9, delay: 0.4 }}
               className="mt-4 text-[10px] uppercase tracking-[0.5em] text-white/40"
             >
-              Composing light since 2005
+              Studio · Lighting Solutions
             </motion.div>
           </motion.div>
 
@@ -90,10 +103,10 @@ export default function Preloader() {
 
           {/* Corner ornaments */}
           <div className="absolute top-8 left-8 text-[9px] uppercase tracking-[0.4em] text-white/25 font-mono">
-            ◐ Atelier de Lumière
+            ◐ Blink Box Studio
           </div>
           <div className="absolute top-8 right-8 text-[9px] uppercase tracking-[0.4em] text-white/25 font-mono">
-            Paris · Mumbai
+            Mumbai · India
           </div>
           <div className="absolute bottom-8 right-8 text-[9px] uppercase tracking-[0.4em] text-white/25 font-mono">
             v · 2026

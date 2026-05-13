@@ -3,28 +3,31 @@
 @tailwind utilities;
 
 :root {
-  /* color-temperature driven by user toggle (defaults to warm 2700K) */
-  --lamp-r: 245;
-  --lamp-g: 200;
-  --lamp-b: 130;
-  --lamp-glow: 245, 200, 130;
-  --lamp-warm: #f5c882;
-  --lamp-core: #fff4d6;
-  --ambient: 245, 200, 130;
+  /* Brand defaults — coral from BLINK BOX STUDIO logo */
+  --lamp-r: 229;
+  --lamp-g: 90;
+  --lamp-b: 78;
+  --lamp-glow: 229, 90, 78;
+  --lamp-warm: #e55a4e;
+  --lamp-core: #ff8a78;
+  --ambient: 229, 90, 78;
   --temp-label: "2700K";
+  /* Secondary brand accents */
+  --plum-glow: 155, 91, 165;
+  --sky-glow: 59, 107, 176;
 
   /* scroll-driven brightness (0..1), set from JS */
   --room-brightness: 0;
   --room-ambient: 0;
 
   /* page palette — interpolated live by LampHero based on scroll */
-  --page-bg: #050306;
-  --bg-deep: #050306;
-  --bg-soft: #0d0a07;
-  --ink: #efe6d4;
-  --ink-rgb: 239, 230, 212;
-  --ink-muted: rgba(239, 230, 212, 0.55);
-  --line: rgba(212, 162, 74, 0.14);
+  --page-bg: #0a0608;
+  --bg-deep: #0a0608;
+  --bg-soft: #14090c;
+  --ink: #f5ece4;
+  --ink-rgb: 245, 236, 228;
+  --ink-muted: rgba(245, 236, 228, 0.55);
+  --line: rgba(229, 90, 78, 0.16);
 }
 
 /* All CSS variables above are also updated live from JS in TemperatureProvider
