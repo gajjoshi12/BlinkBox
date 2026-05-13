@@ -17,11 +17,13 @@
   --room-brightness: 0;
   --room-ambient: 0;
 
-  /* page palette */
+  /* page palette — interpolated live by LampHero based on scroll */
+  --page-bg: #050306;
   --bg-deep: #050306;
   --bg-soft: #0d0a07;
   --ink: #efe6d4;
-  --ink-muted: #8a7e6a;
+  --ink-rgb: 239, 230, 212;
+  --ink-muted: rgba(239, 230, 212, 0.55);
   --line: rgba(212, 162, 74, 0.14);
 }
 
@@ -33,11 +35,32 @@
 }
 
 html, body {
-  background: var(--bg-deep);
+  background: var(--page-bg);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  transition: background-color 60ms linear;
+}
+
+/* When scrolled to the "light" end of the page, flip text + borders so
+   white-on-dark elements become readable on the now-white background.
+   We use attribute selectors to match Tailwind's escaped class names without
+   relying on backslash escapes (which the CSS minifier mishandles). */
+html.theme-light [class*="text-white"] {
+  color: rgb(20, 16, 12) !important;
+}
+html.theme-light [class*="border-white"] {
+  border-color: rgba(20, 16, 12, 0.18) !important;
+}
+html.theme-light [class*="bg-black"] {
+  background-color: rgba(255, 250, 242, 0.7) !important;
+  backdrop-filter: blur(8px);
+}
+/* Keep the lamp's bright text accents readable */
+html.theme-light [class*="from-["][class*="lamp"],
+html.theme-light [class*="to-["][class*="lamp"] {
+  filter: brightness(0.4);
 }
 
 body {
