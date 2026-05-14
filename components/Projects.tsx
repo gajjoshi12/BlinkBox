@@ -164,7 +164,33 @@ function TyvekIllustration({ i, imgY }: { i: number; imgY: MotionValue<number> }
 }
 
 function FunnelIllustration({ i, imgY }: { i: number; imgY: MotionValue<number> }) {
-  // Inverted funnel with three concentric glowing rings
+  // Photoreal inverted-funnel viewed from below. We render it as nested
+  // FULL ellipses (largest first, smallest last) — z-order alone carves
+  // the ring bands, and a vertical gradient on each gives the curved
+  // cone-surface shading (bright cove-lit top, shadowed bottom) that
+  // matches the Google Rio Plex install photograph.
+  const cx = 400;
+
+  // Each cone tier is a full ellipse. Vertical centers (cy) STEP UP
+  // aggressively as we go inward — the funnel narrows AND recedes into
+  // the ceiling, so each successive ring is both smaller and higher on
+  // screen. This is what makes it read as 3D depth instead of a flat
+  // disc. ry also shrinks faster than rx (deeper rings are seen at a
+  // sharper viewing angle, so they foreshorten more).
+  const bands = [
+    { cy: 390, rx: 360, ry: 130, fill: `fnBand1${i}`,
+      rimColor: "rgba(255,238,170,0.95)", wallShade: "#3a1a08" }, // outer yellow
+    { cy: 355, rx: 285, ry:  98, fill: `fnBand2${i}`,
+      rimColor: "rgba(255,196,110,0.95)", wallShade: "#2a0e06" }, // amber
+    { cy: 325, rx: 215, ry:  72, fill: `fnBand3${i}`,
+      rimColor: "rgba(255,140,70,0.95)",  wallShade: "#1c0604" }, // orange
+    { cy: 300, rx: 155, ry:  52, fill: `fnBand4${i}`,
+      rimColor: "rgba(220,80,40,0.95)",   wallShade: "#120303" }, // red
+    { cy: 282, rx: 105, ry:  36, fill: `fnBand5${i}`,
+      rimColor: "rgba(170,40,22,0.95)",   wallShade: "#0a0202" }, // deep crimson
+  ];
+  const mouth = { cy: 270, rx: 44, ry: 16 };
+
   return (
     <motion.svg
       style={{ y: imgY, scale: 1.06 }}
@@ -173,96 +199,214 @@ function FunnelIllustration({ i, imgY }: { i: number; imgY: MotionValue<number> 
       preserveAspectRatio="xMidYMid slice"
     >
       <defs>
-        <linearGradient id={`fnBg${i}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#100a08" />
-          <stop offset="100%" stopColor="#060304" />
-        </linearGradient>
-        <radialGradient id={`fnGlow${i}`} cx="50%" cy="40%">
-          <stop offset="0%" stopColor="#ffd58a" stopOpacity="1" />
-          <stop offset="40%" stopColor="#ed7959" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#ed7959" stopOpacity="0" />
+        {/* Dark ceiling with subtle vignette */}
+        <radialGradient id={`fnBg${i}`} cx="50%" cy="48%" r="78%">
+          <stop offset="0%"  stopColor="#1c110a" />
+          <stop offset="55%" stopColor="#0a0604" />
+          <stop offset="100%" stopColor="#040202" />
         </radialGradient>
-        <linearGradient id={`fnRing1${i}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ffcf6e" />
-          <stop offset="100%" stopColor="#d4781a" />
-        </linearGradient>
-        <linearGradient id={`fnRing2${i}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ed7959" />
-          <stop offset="100%" stopColor="#a4421a" />
-        </linearGradient>
-        <linearGradient id={`fnRing3${i}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#c9332a" />
-          <stop offset="100%" stopColor="#6b1814" />
-        </linearGradient>
-        <radialGradient id={`fnMouth${i}`}>
-          <stop offset="0%" stopColor="#a8d9c9" stopOpacity="1" />
-          <stop offset="100%" stopColor="#3e8275" stopOpacity="0.5" />
+
+        {/* Massive warm halo around the fixture */}
+        <radialGradient id={`fnHalo${i}`} cx="50%" cy="48%" r="62%">
+          <stop offset="0%"  stopColor="#ffb060" stopOpacity="0.55" />
+          <stop offset="35%" stopColor="#e86028" stopOpacity="0.22" />
+          <stop offset="70%" stopColor="#7a1e08" stopOpacity="0.06" />
+          <stop offset="100%" stopColor="#000"    stopOpacity="0" />
         </radialGradient>
+
+        {/* Per-band vertical gradients — bright cove-lit top edge of each
+            cone tier, fading to deep shadow at the bottom edge. */}
+        <linearGradient id={`fnBand1${i}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor="#fff0b8" />
+          <stop offset="22%"  stopColor="#ffd068" />
+          <stop offset="55%"  stopColor="#e89220" />
+          <stop offset="85%"  stopColor="#6a2e08" />
+          <stop offset="100%" stopColor="#180a04" />
+        </linearGradient>
+        <linearGradient id={`fnBand2${i}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor="#ffd090" />
+          <stop offset="22%"  stopColor="#ff9d48" />
+          <stop offset="55%"  stopColor="#d45418" />
+          <stop offset="85%"  stopColor="#4a1208" />
+          <stop offset="100%" stopColor="#120402" />
+        </linearGradient>
+        <linearGradient id={`fnBand3${i}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor="#ff9264" />
+          <stop offset="22%"  stopColor="#ed5c20" />
+          <stop offset="55%"  stopColor="#a82a10" />
+          <stop offset="85%"  stopColor="#380a05" />
+          <stop offset="100%" stopColor="#100302" />
+        </linearGradient>
+        <linearGradient id={`fnBand4${i}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor="#e85030" />
+          <stop offset="25%"  stopColor="#b02418" />
+          <stop offset="60%"  stopColor="#6a1208" />
+          <stop offset="90%"  stopColor="#2a0604" />
+          <stop offset="100%" stopColor="#0a0202" />
+        </linearGradient>
+        <linearGradient id={`fnBand5${i}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor="#a02014" />
+          <stop offset="40%"  stopColor="#5a0e08" />
+          <stop offset="75%"  stopColor="#220504" />
+          <stop offset="100%" stopColor="#080202" />
+        </linearGradient>
+
+        {/* Cyan stretch-fabric mouth — softly back-lit teal */}
+        <radialGradient id={`fnMouth${i}`} cx="50%" cy="38%">
+          <stop offset="0%"   stopColor="#d8f0e2" />
+          <stop offset="35%"  stopColor="#7ec8b0" />
+          <stop offset="75%"  stopColor="#3a8478" />
+          <stop offset="100%" stopColor="#0e3a38" />
+        </radialGradient>
+
+        {/* Drop wash spilling onto the surroundings */}
+        <radialGradient id={`fnUnderwash${i}`} cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stopColor="#ed7030" stopOpacity="0.30" />
+          <stop offset="100%" stopColor="#ed7030" stopOpacity="0" />
+        </radialGradient>
+
+        {/* Filter to soften the rim highlight just enough so it reads as
+            cove-light bleed rather than a hard line */}
+        <filter id={`fnSoft${i}`} x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="0.9" />
+        </filter>
       </defs>
 
+      {/* Background ceiling */}
       <rect width="800" height="600" fill={`url(#fnBg${i})`} />
 
-      {/* ceiling slab */}
-      <rect x="0" y="0" width="800" height="60" fill="#0b0808" />
+      {/* Massive ambient halo from the fixture */}
+      <ellipse cx={cx} cy="340" rx="480" ry="320" fill={`url(#fnHalo${i})`} />
 
-      {/* outer glow halo */}
-      <ellipse cx="400" cy="260" rx="380" ry="220" fill={`url(#fnGlow${i})`} />
+      {/* Faint warm wash on the false-ceiling around the fixture */}
+      <ellipse cx={cx} cy="240" rx="420" ry="50" fill="rgba(255,170,90,0.10)" />
 
-      {/* Funnel — three concentric "ring" layers (outer → inner) */}
-      {/* Layer 1 — outermost amber/yellow ring */}
-      <path
-        d="M 120 60 L 680 60 L 540 220 L 260 220 Z"
-        fill={`url(#fnRing1${i})`}
-      />
-      {/* dark separator */}
-      <rect x="260" y="220" width="280" height="6" fill="#1a0d08" />
+      {/* Cone bands — drawn largest→smallest. Each tier sits visibly
+          HIGHER than the previous (cy step ~30px) and is narrower, so
+          stacking them creates the 3D inverted-funnel illusion. The
+          dark "wall" ring drawn just above each band fakes the cone
+          sidewall depth between adjacent tiers. */}
+      {bands.map((b, k) => (
+        <g key={k}>
+          {/* Cone sidewall shadow — dark ring sitting between this band
+              and the previous one. This is the visible "step inset" that
+              gives the funnel its stepped 3D depth instead of looking
+              flat. Drawn slightly larger and offset upward. */}
+          {k > 0 && (
+            <ellipse
+              cx={cx}
+              cy={b.cy - b.ry * 0.15}
+              rx={b.rx + 4}
+              ry={b.ry + 4}
+              fill={b.wallShade}
+            />
+          )}
+          {/* The band ellipse (next band paints over its center, so only
+              the OUTER ring of this color stays visible) */}
+          <ellipse
+            cx={cx}
+            cy={b.cy}
+            rx={b.rx}
+            ry={b.ry}
+            fill={`url(#${b.fill})`}
+          />
+          {/* Bright cove-light rim along the BOTTOM arc — the LED strip
+              behind this tier glowing out along its lowest visible edge */}
+          <path
+            d={`M ${cx - b.rx + 2} ${b.cy} A ${b.rx - 1} ${b.ry - 1} 0 0 0 ${cx + b.rx - 2} ${b.cy}`}
+            fill="none"
+            stroke={b.rimColor}
+            strokeWidth="1.8"
+            opacity="0.95"
+            filter={`url(#fnSoft${i})`}
+          />
+          {/* Subtle dark inner-edge line at the very top of the visible
+              band (where it meets the next tier) — adds tier separation */}
+          <path
+            d={`M ${cx - b.rx + 4} ${b.cy} A ${b.rx - 3} ${b.ry - 3} 0 0 1 ${cx + b.rx - 4} ${b.cy}`}
+            fill="none"
+            stroke="rgba(0,0,0,0.6)"
+            strokeWidth="1.2"
+          />
+        </g>
+      ))}
 
-      {/* Layer 2 — orange ring */}
-      <path
-        d="M 270 226 L 530 226 L 440 360 L 360 360 Z"
-        fill={`url(#fnRing2${i})`}
-      />
-      {/* dark separator */}
-      <rect x="360" y="360" width="80" height="4" fill="#1a0d08" />
-
-      {/* Layer 3 — innermost crimson ring */}
-      <path
-        d="M 365 364 L 435 364 L 420 460 L 380 460 Z"
-        fill={`url(#fnRing3${i})`}
-      />
-
-      {/* horizontal line accents — band detail seen in real install */}
-      {[80, 120, 160].map((y) => (
-        <line
-          key={y}
-          x1={120 + (y - 60) * 1.3}
-          y1={y}
-          x2={680 - (y - 60) * 1.3}
-          y2={y}
-          stroke="rgba(255,255,255,0.07)"
-          strokeWidth="0.6"
+      {/* Horizontal band striations on the deepest crimson tier — the
+          dark stripes visible near the throat in the photograph */}
+      {[
+        { rx: 92, ry: 30, cy: 286 },
+        { rx: 84, ry: 26, cy: 280 },
+        { rx: 76, ry: 22, cy: 274 },
+      ].map((s, k) => (
+        <ellipse
+          key={`stripe${k}`}
+          cx={cx}
+          cy={s.cy}
+          rx={s.rx}
+          ry={s.ry}
+          fill="none"
+          stroke="rgba(0,0,0,0.5)"
+          strokeWidth="1.3"
         />
       ))}
 
-      {/* circular mouth at the bottom — stretch fabric */}
-      <ellipse cx="400" cy="478" rx="30" ry="10" fill={`url(#fnMouth${i})`} />
-      <ellipse cx="400" cy="478" rx="30" ry="10" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
+      {/* Cyan stretch-fabric mouth at the very deepest point */}
+      <ellipse cx={cx} cy={mouth.cy} rx={mouth.rx + 5} ry={mouth.ry + 4} fill="#050807" />
+      <ellipse cx={cx} cy={mouth.cy} rx={mouth.rx} ry={mouth.ry} fill={`url(#fnMouth${i})`} />
+      {/* fabric tension specular highlights */}
+      <ellipse
+        cx={cx}
+        cy={mouth.cy - 2}
+        rx={mouth.rx}
+        ry={mouth.ry}
+        fill="none"
+        stroke="rgba(255,255,255,0.18)"
+        strokeWidth="0.7"
+      />
+      <ellipse
+        cx={cx - 6}
+        cy={mouth.cy - 6}
+        rx={mouth.rx * 0.55}
+        ry="3"
+        fill="rgba(255,255,255,0.25)"
+      />
 
-      {/* faint reflection on ceiling */}
-      <ellipse cx="400" cy="56" rx="290" ry="6" fill="rgba(237,121,89,0.18)" />
-
-      {/* small accent dots on the rim (suggesting LED coves) */}
-      {Array.from({ length: 14 }).map((_, k) => {
-        const t = k / 13;
-        const x = 130 + t * 540;
+      {/* Tiny LED dot row along the outermost cove — the visible bottom
+          rim of the outer cone tier, where the strip lights the ceiling */}
+      {Array.from({ length: 32 }).map((_, k) => {
+        const t = k / 31;
+        const a = t * Math.PI; // bottom semicircle 0..π
+        const x = cx - Math.cos(a) * 358;
+        const y = bands[0].cy + Math.sin(a) * (bands[0].ry - 2);
         return (
           <circle
-            key={k}
+            key={`led${k}`}
             cx={x}
-            cy={66}
-            r="1.6"
-            fill="#ffd58a"
-            opacity="0.65"
+            cy={y}
+            r="1.3"
+            fill="#ffe6b0"
+            opacity={0.45 + Math.sin(k * 0.6) * 0.2}
+          />
+        );
+      })}
+
+      {/* Soft underwash — light spilling toward the floor / camera */}
+      <ellipse cx={cx} cy="550" rx="430" ry="64" fill={`url(#fnUnderwash${i})`} />
+
+      {/* Dust motes / film grain for atmosphere */}
+      {Array.from({ length: 24 }).map((_, k) => {
+        const seed = k * 73.31;
+        const x = (seed * 11.1) % 800;
+        const y = (seed * 7.7) % 600;
+        const r = 0.6 + ((seed * 3.3) % 1) * 0.9;
+        return (
+          <circle
+            key={`m${k}`}
+            cx={x}
+            cy={y}
+            r={r}
+            fill="#ffd8a0"
+            opacity={0.05 + ((seed * 1.9) % 1) * 0.09}
           />
         );
       })}

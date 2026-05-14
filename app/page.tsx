@@ -15,6 +15,7 @@ import Cursor from "@/components/Cursor";
 import DustMotes from "@/components/DustMotes";
 import Preloader from "@/components/Preloader";
 import EventInvite from "@/components/EventInvite";
+import AiChat from "@/components/AiChat";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
       <TemperatureToggle />
       <Cursor />
       <EventInvite />
+      <AiChat />
 
       <div className="relative z-10">
         <Hero />

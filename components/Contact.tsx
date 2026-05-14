@@ -67,9 +67,17 @@ export default function Contact() {
                 href="https://www.blinkboxlighting.com"
                 target="_blank"
                 rel="noreferrer"
-                className="text-white/90 hover:text-[rgb(var(--lamp-glow))] transition-colors"
+                className="text-white/90 hover:text-[rgb(var(--lamp-glow))] transition-colors block"
               >
                 www.blinkboxlighting.com
+              </a>
+              <a
+                href="https://www.instagram.com/theblinkboxstudio?igsh=eDF2YzBzODU5eGs1"
+                target="_blank"
+                rel="noreferrer"
+                className="text-white/90 hover:text-[rgb(var(--lamp-glow))] transition-colors block mt-1"
+              >
+                @theblinkboxstudio
               </a>
             </div>
           </div>
