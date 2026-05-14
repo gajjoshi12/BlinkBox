@@ -171,25 +171,27 @@ function FunnelIllustration({ i, imgY }: { i: number; imgY: MotionValue<number> 
   // matches the Google Rio Plex install photograph.
   const cx = 400;
 
-  // Each cone tier is a full ellipse. Vertical centers (cy) STEP UP
-  // aggressively as we go inward — the funnel narrows AND recedes into
-  // the ceiling, so each successive ring is both smaller and higher on
-  // screen. This is what makes it read as 3D depth instead of a flat
-  // disc. ry also shrinks faster than rx (deeper rings are seen at a
-  // sharper viewing angle, so they foreshorten more).
+  // The funnel hangs WIDE-END-UP: the big yellow rim is at the top, and
+  // it tapers DOWN through amber → orange → red → crimson to the small
+  // cyan stretch-fabric mouth at the bottom. We view the OUTSIDE of the
+  // cone, so each tier is a solid convex colour band — bright where the
+  // surface bulges toward us, with a glowing cove line in the groove
+  // between tiers. Bands are drawn widest→narrowest (top→bottom); each
+  // lower band paints over the previous one's lower half, leaving the
+  // previous band visible as a curved crescent above it.
   const bands = [
-    { cy: 390, rx: 360, ry: 130, fill: `fnBand1${i}`,
-      rimColor: "rgba(255,238,170,0.95)", wallShade: "#3a1a08" }, // outer yellow
-    { cy: 355, rx: 285, ry:  98, fill: `fnBand2${i}`,
-      rimColor: "rgba(255,196,110,0.95)", wallShade: "#2a0e06" }, // amber
-    { cy: 325, rx: 215, ry:  72, fill: `fnBand3${i}`,
-      rimColor: "rgba(255,140,70,0.95)",  wallShade: "#1c0604" }, // orange
-    { cy: 300, rx: 155, ry:  52, fill: `fnBand4${i}`,
-      rimColor: "rgba(220,80,40,0.95)",   wallShade: "#120303" }, // red
-    { cy: 282, rx: 105, ry:  36, fill: `fnBand5${i}`,
-      rimColor: "rgba(170,40,22,0.95)",   wallShade: "#0a0202" }, // deep crimson
+    { cy: 200, rx: 330, ry: 88, fill: `fnBand1${i}`,
+      cove: "rgba(255,238,170,0.95)" }, // yellow rim (top, widest)
+    { cy: 256, rx: 250, ry: 70, fill: `fnBand2${i}`,
+      cove: "rgba(255,198,110,0.95)" }, // amber
+    { cy: 302, rx: 182, ry: 55, fill: `fnBand3${i}`,
+      cove: "rgba(255,142,70,0.95)"  }, // orange
+    { cy: 338, rx: 124, ry: 42, fill: `fnBand4${i}`,
+      cove: "rgba(228,86,42,0.95)"   }, // red
+    { cy: 364, rx:  78, ry: 30, fill: `fnBand5${i}`,
+      cove: "rgba(182,48,26,0.95)"   }, // deep crimson (bottom, narrowest)
   ];
-  const mouth = { cy: 270, rx: 44, ry: 16 };
+  const mouth = { cy: 382, rx: 40, ry: 16 };
 
   return (
     <motion.svg
@@ -214,41 +216,43 @@ function FunnelIllustration({ i, imgY }: { i: number; imgY: MotionValue<number> 
           <stop offset="100%" stopColor="#000"    stopOpacity="0" />
         </radialGradient>
 
-        {/* Per-band vertical gradients — bright cove-lit top edge of each
-            cone tier, fading to deep shadow at the bottom edge. */}
+        {/* Per-band vertical gradients — each tier is a convex OUTER
+            surface. Bright where it bulges toward us (the visible top
+            crescent), rolling off to a darker shaded base. Reads as a
+            solid lit cone wall, not a hollow lit cavity. */}
         <linearGradient id={`fnBand1${i}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#fff0b8" />
-          <stop offset="22%"  stopColor="#ffd068" />
-          <stop offset="55%"  stopColor="#e89220" />
-          <stop offset="85%"  stopColor="#6a2e08" />
-          <stop offset="100%" stopColor="#180a04" />
+          <stop offset="0%"   stopColor="#ffe9a0" />
+          <stop offset="18%"  stopColor="#ffd460" />
+          <stop offset="42%"  stopColor="#f0a828" />
+          <stop offset="70%"  stopColor="#9a5410" />
+          <stop offset="100%" stopColor="#4a2406" />
         </linearGradient>
         <linearGradient id={`fnBand2${i}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#ffd090" />
-          <stop offset="22%"  stopColor="#ff9d48" />
-          <stop offset="55%"  stopColor="#d45418" />
-          <stop offset="85%"  stopColor="#4a1208" />
-          <stop offset="100%" stopColor="#120402" />
+          <stop offset="0%"   stopColor="#ffc888" />
+          <stop offset="18%"  stopColor="#ff9c44" />
+          <stop offset="42%"  stopColor="#e0641c" />
+          <stop offset="70%"  stopColor="#8a3010" />
+          <stop offset="100%" stopColor="#3e1206" />
         </linearGradient>
         <linearGradient id={`fnBand3${i}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#ff9264" />
-          <stop offset="22%"  stopColor="#ed5c20" />
-          <stop offset="55%"  stopColor="#a82a10" />
-          <stop offset="85%"  stopColor="#380a05" />
-          <stop offset="100%" stopColor="#100302" />
+          <stop offset="0%"   stopColor="#ff9a5e" />
+          <stop offset="18%"  stopColor="#f0641e" />
+          <stop offset="42%"  stopColor="#c23c14" />
+          <stop offset="70%"  stopColor="#6e1c0c" />
+          <stop offset="100%" stopColor="#300a06" />
         </linearGradient>
         <linearGradient id={`fnBand4${i}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#e85030" />
-          <stop offset="25%"  stopColor="#b02418" />
-          <stop offset="60%"  stopColor="#6a1208" />
-          <stop offset="90%"  stopColor="#2a0604" />
-          <stop offset="100%" stopColor="#0a0202" />
+          <stop offset="0%"   stopColor="#f06038" />
+          <stop offset="20%"  stopColor="#cc3418" />
+          <stop offset="45%"  stopColor="#921e10" />
+          <stop offset="72%"  stopColor="#4e0e08" />
+          <stop offset="100%" stopColor="#220604" />
         </linearGradient>
         <linearGradient id={`fnBand5${i}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#a02014" />
-          <stop offset="40%"  stopColor="#5a0e08" />
-          <stop offset="75%"  stopColor="#220504" />
-          <stop offset="100%" stopColor="#080202" />
+          <stop offset="0%"   stopColor="#c8341c" />
+          <stop offset="28%"  stopColor="#8a1c10" />
+          <stop offset="60%"  stopColor="#460c08" />
+          <stop offset="100%" stopColor="#1c0504" />
         </linearGradient>
 
         {/* Cyan stretch-fabric mouth — softly back-lit teal */}
@@ -276,33 +280,19 @@ function FunnelIllustration({ i, imgY }: { i: number; imgY: MotionValue<number> 
       <rect width="800" height="600" fill={`url(#fnBg${i})`} />
 
       {/* Massive ambient halo from the fixture */}
-      <ellipse cx={cx} cy="340" rx="480" ry="320" fill={`url(#fnHalo${i})`} />
+      <ellipse cx={cx} cy="290" rx="470" ry="320" fill={`url(#fnHalo${i})`} />
 
-      {/* Faint warm wash on the false-ceiling around the fixture */}
-      <ellipse cx={cx} cy="240" rx="420" ry="50" fill="rgba(255,170,90,0.10)" />
+      {/* Faint warm wash on the ceiling around the wide top rim */}
+      <ellipse cx={cx} cy="170" rx="420" ry="56" fill="rgba(255,170,90,0.10)" />
 
-      {/* Cone bands — drawn largest→smallest. Each tier sits visibly
-          HIGHER than the previous (cy step ~30px) and is narrower, so
-          stacking them creates the 3D inverted-funnel illusion. The
-          dark "wall" ring drawn just above each band fakes the cone
-          sidewall depth between adjacent tiers. */}
+      {/* Cone tiers — drawn widest→narrowest, top→bottom. Each lower band
+          paints over the lower half of the band above it, so the band
+          above stays visible as a convex colour crescent. The result
+          reads as the OUTSIDE of an inverted cone tapering down to the
+          narrow mouth. */}
       {bands.map((b, k) => (
         <g key={k}>
-          {/* Cone sidewall shadow — dark ring sitting between this band
-              and the previous one. This is the visible "step inset" that
-              gives the funnel its stepped 3D depth instead of looking
-              flat. Drawn slightly larger and offset upward. */}
-          {k > 0 && (
-            <ellipse
-              cx={cx}
-              cy={b.cy - b.ry * 0.15}
-              rx={b.rx + 4}
-              ry={b.ry + 4}
-              fill={b.wallShade}
-            />
-          )}
-          {/* The band ellipse (next band paints over its center, so only
-              the OUTER ring of this color stays visible) */}
+          {/* The tier's convex colour surface */}
           <ellipse
             cx={cx}
             cy={b.cy}
@@ -310,53 +300,61 @@ function FunnelIllustration({ i, imgY }: { i: number; imgY: MotionValue<number> 
             ry={b.ry}
             fill={`url(#${b.fill})`}
           />
-          {/* Bright cove-light rim along the BOTTOM arc — the LED strip
-              behind this tier glowing out along its lowest visible edge */}
+          {/* Soft shadow groove just below the visible crescent — where
+              this tier rolls under into the next one. Gives 3D rounding. */}
           <path
-            d={`M ${cx - b.rx + 2} ${b.cy} A ${b.rx - 1} ${b.ry - 1} 0 0 0 ${cx + b.rx - 2} ${b.cy}`}
+            d={`M ${cx - b.rx + 3} ${b.cy} A ${b.rx - 2} ${b.ry - 2} 0 0 0 ${cx + b.rx - 3} ${b.cy}`}
             fill="none"
-            stroke={b.rimColor}
-            strokeWidth="1.8"
+            stroke="rgba(0,0,0,0.45)"
+            strokeWidth="6"
+            opacity="0.5"
+            filter={`url(#fnSoft${i})`}
+          />
+          {/* Glowing cove line along the TOP edge of this tier — the LED
+              strip sitting in the groove where it meets the band above */}
+          <path
+            d={`M ${cx - b.rx + 2} ${b.cy} A ${b.rx - 1} ${b.ry - 1} 0 0 1 ${cx + b.rx - 2} ${b.cy}`}
+            fill="none"
+            stroke={b.cove}
+            strokeWidth="2.4"
             opacity="0.95"
             filter={`url(#fnSoft${i})`}
           />
-          {/* Subtle dark inner-edge line at the very top of the visible
-              band (where it meets the next tier) — adds tier separation */}
+          {/* Crisp specular highlight riding on top of the cove line */}
           <path
-            d={`M ${cx - b.rx + 4} ${b.cy} A ${b.rx - 3} ${b.ry - 3} 0 0 1 ${cx + b.rx - 4} ${b.cy}`}
+            d={`M ${cx - b.rx * 0.8} ${b.cy - b.ry * 0.55} A ${b.rx * 0.82} ${b.ry * 0.82} 0 0 1 ${cx + b.rx * 0.8} ${b.cy - b.ry * 0.55}`}
             fill="none"
-            stroke="rgba(0,0,0,0.6)"
-            strokeWidth="1.2"
+            stroke="rgba(255,255,255,0.5)"
+            strokeWidth="1"
+            opacity="0.7"
+            filter={`url(#fnSoft${i})`}
           />
         </g>
       ))}
 
-      {/* Horizontal band striations on the deepest crimson tier — the
-          dark stripes visible near the throat in the photograph */}
+      {/* Horizontal band striations on the red/crimson tiers — the dark
+          stripes visible near the throat in the photograph */}
       {[
-        { rx: 92, ry: 30, cy: 286 },
-        { rx: 84, ry: 26, cy: 280 },
-        { rx: 76, ry: 22, cy: 274 },
+        { rx: 116, ry: 38, cy: 332 },
+        { rx:  98, ry: 33, cy: 326 },
+        { rx:  72, ry: 27, cy: 358 },
       ].map((s, k) => (
-        <ellipse
+        <path
           key={`stripe${k}`}
-          cx={cx}
-          cy={s.cy}
-          rx={s.rx}
-          ry={s.ry}
+          d={`M ${cx - s.rx + 2} ${s.cy} A ${s.rx} ${s.ry} 0 0 1 ${cx + s.rx - 2} ${s.cy}`}
           fill="none"
           stroke="rgba(0,0,0,0.5)"
-          strokeWidth="1.3"
+          strokeWidth="1.6"
         />
       ))}
 
-      {/* Cyan stretch-fabric mouth at the very deepest point */}
+      {/* Cyan stretch-fabric mouth at the narrow bottom end */}
       <ellipse cx={cx} cy={mouth.cy} rx={mouth.rx + 5} ry={mouth.ry + 4} fill="#050807" />
       <ellipse cx={cx} cy={mouth.cy} rx={mouth.rx} ry={mouth.ry} fill={`url(#fnMouth${i})`} />
       {/* fabric tension specular highlights */}
       <ellipse
         cx={cx}
-        cy={mouth.cy - 2}
+        cy={mouth.cy - 1}
         rx={mouth.rx}
         ry={mouth.ry}
         fill="none"
@@ -364,19 +362,19 @@ function FunnelIllustration({ i, imgY }: { i: number; imgY: MotionValue<number> 
         strokeWidth="0.7"
       />
       <ellipse
-        cx={cx - 6}
-        cy={mouth.cy - 6}
-        rx={mouth.rx * 0.55}
-        ry="3"
-        fill="rgba(255,255,255,0.25)"
+        cx={cx - 5}
+        cy={mouth.cy - 5}
+        rx={mouth.rx * 0.5}
+        ry="2.6"
+        fill="rgba(255,255,255,0.28)"
       />
 
-      {/* Tiny LED dot row along the outermost cove — the visible bottom
-          rim of the outer cone tier, where the strip lights the ceiling */}
-      {Array.from({ length: 32 }).map((_, k) => {
-        const t = k / 31;
-        const a = t * Math.PI; // bottom semicircle 0..π
-        const x = cx - Math.cos(a) * 358;
+      {/* Tiny LED dot row along the wide top rim — the outermost cove
+          glowing against the ceiling */}
+      {Array.from({ length: 34 }).map((_, k) => {
+        const t = k / 33;
+        const a = Math.PI + t * Math.PI; // top semicircle
+        const x = cx + Math.cos(a) * (bands[0].rx - 2);
         const y = bands[0].cy + Math.sin(a) * (bands[0].ry - 2);
         return (
           <circle
@@ -384,8 +382,8 @@ function FunnelIllustration({ i, imgY }: { i: number; imgY: MotionValue<number> 
             cx={x}
             cy={y}
             r="1.3"
-            fill="#ffe6b0"
-            opacity={0.45 + Math.sin(k * 0.6) * 0.2}
+            fill="#fff0c0"
+            opacity={0.5 + Math.sin(k * 0.6) * 0.2}
           />
         );
       })}

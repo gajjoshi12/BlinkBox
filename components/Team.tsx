@@ -292,6 +292,7 @@ function PersonCard({ person, index }: { person: Person; index: number }) {
             src={`/team/${person.photo}`}
             alt={person.name}
             loading="lazy"
+            decoding="async"
             onError={() => setImgOk(false)}
             className="absolute inset-0 w-full h-full object-cover object-center grayscale group-hover:grayscale-0 scale-[1.02] group-hover:scale-[1.06] transition-all duration-700 ease-out"
           />
