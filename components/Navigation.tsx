@@ -6,12 +6,13 @@ import Magnetic from "./Magnetic";
 import BlinkMark from "./BlinkMark";
 
 const links = [
-  { href: "#philosophy", label: "Philosophy" },
-  { href: "#services", label: "Practice" },
-  { href: "#projects", label: "Work" },
-  { href: "#process", label: "Process" },
-  { href: "#showroom", label: "Studio" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#philosophy", label: "Philosophy" },
+  { href: "/#services", label: "Practice" },
+  { href: "/#projects", label: "Work" },
+  { href: "/#process", label: "Process" },
+  { href: "/#showroom", label: "Studio" },
+  { href: "/team", label: "Team" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export default function Navigation() {
@@ -32,7 +33,7 @@ export default function Navigation() {
         className="fixed top-0 inset-x-0 z-40 border-b transition-colors"
       >
         <div className="mx-auto max-w-[1400px] px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
-          <a href="#top" className="group flex items-center gap-2.5 md:gap-3">
+          <a href="/" className="group flex items-center gap-2.5 md:gap-3">
             <BlinkMark />
             <span className="font-display text-base md:text-xl tracking-[0.22em] md:tracking-[0.26em] text-white/95 group-hover:tracking-[0.32em] transition-all duration-500">
               BLINK BOX
@@ -45,10 +46,9 @@ export default function Navigation() {
               <li key={l.href}>
                 <a
                   href={l.href}
-                  className="relative text-[12px] uppercase tracking-[0.25em] text-white/60 hover:text-white transition-colors group"
+                  className="text-[12px] uppercase tracking-[0.25em] text-white/60 hover:text-white transition-colors"
                 >
                   {l.label}
-                  <span className="absolute -bottom-2 left-0 right-0 h-px bg-[rgb(var(--lamp-glow))] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                 </a>
               </li>
             ))}
@@ -57,7 +57,7 @@ export default function Navigation() {
           {/* desktop CTA */}
           <Magnetic strength={18} className="hidden md:inline-block">
             <a
-              href="#contact"
+              href="/#contact"
               className="relative overflow-hidden rounded-full border border-white/15 px-6 py-2.5 text-[11px] uppercase tracking-[0.25em] text-white/80 hover:text-black transition-colors duration-500 group"
             >
               <span className="relative z-10">Begin a Project</span>
@@ -126,7 +126,7 @@ export default function Navigation() {
               className="px-5 mt-6"
             >
               <a
-                href="#contact"
+                href="/#contact"
                 onClick={() => setOpen(false)}
                 className="block w-full text-center rounded-full border border-[rgb(var(--lamp-glow))]/40 bg-[rgba(var(--lamp-glow),0.05)] py-4 text-[11px] uppercase tracking-[0.3em] text-[rgb(var(--lamp-glow))]"
               >

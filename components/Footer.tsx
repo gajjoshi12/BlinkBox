@@ -8,7 +8,7 @@ export default function Footer() {
     <footer className="relative border-t border-white/8 py-14 md:py-20 px-5 md:px-6 mt-16 md:mt-20">
       <div className="relative z-10 mx-auto max-w-[1400px] grid md:grid-cols-12 gap-12">
         <div className="md:col-span-5">
-          <a href="#top" className="inline-flex items-center gap-3 mb-6">
+          <a href="/" className="inline-flex items-center gap-3 mb-6">
             <BlinkMark size={32} animated={false} />
             <span className="font-display text-xl tracking-[0.26em]">BLINK BOX</span>
           </a>
@@ -22,10 +22,11 @@ export default function Footer() {
         <div className="md:col-span-2">
           <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Studio</div>
           <ul className="space-y-2 text-sm text-white/65">
-            <li><a href="#philosophy" className="hover:text-white">Philosophy</a></li>
-            <li><a href="#services" className="hover:text-white">Services</a></li>
-            <li><a href="#process" className="hover:text-white">Process</a></li>
-            <li><a href="#contact" className="hover:text-white">Contact</a></li>
+            <li><a href="/#philosophy" className="hover:text-white">Philosophy</a></li>
+            <li><a href="/#services" className="hover:text-white">Services</a></li>
+            <li><a href="/#process" className="hover:text-white">Process</a></li>
+            <li><a href="/team" className="hover:text-white">Team</a></li>
+            <li><a href="/#contact" className="hover:text-white">Contact</a></li>
           </ul>
         </div>
 
