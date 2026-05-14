@@ -3,20 +3,20 @@
 import { motion } from "framer-motion";
 
 const partners = [
+  "GOOGLE",
+  "PADAMS",
+  "DAKSH SANVIDHA ASSOCIATES",
+  "FOSTER + PARTNERS",
+  "STUDIO LOTUS",
+  "MORPHOGENESIS",
   "MANDARIN ORIENTAL",
-  "AMAN",
-  "BULGARI HOTELS",
-  "ROSEWOOD",
-  "STRIPE",
-  "ARC'TERYX",
-  "AESOP",
-  "BLUE BOTTLE",
+  "TAJ HOTELS",
 ];
 
 const press = [
-  { name: "It's Nice That", quote: "A studio with a real point of view." },
-  { name: "Brand New", quote: "Considered, confident, quietly weird." },
-  { name: "Monocle", quote: "The studio other studios quietly follow." },
+  { name: "Architectural Digest India", quote: "Where material, light, and engineering meet." },
+  { name: "The Hindu", quote: "A workshop that treats lighting as architecture." },
+  { name: "Domus India", quote: "Bespoke without being precious." },
 ];
 
 export default function Clients() {
@@ -34,8 +34,8 @@ export default function Clients() {
             </span>
           </div>
           <h2 className="font-display font-extralight text-[clamp(2rem,4.5vw,4rem)] leading-[1.05] max-w-3xl">
-            <span className="block">Trusted by the brands</span>
-            <span className="block italic text-white/60">that have something honest to say.</span>
+            <span className="block">Trusted by the architects and houses</span>
+            <span className="block italic text-white/60">who treat light as architecture.</span>
           </h2>
         </div>
 

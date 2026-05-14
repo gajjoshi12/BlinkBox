@@ -19,9 +19,9 @@ const sans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "BLINK BOX STUDIO — Brand, Motion & Digital Experiences",
+  title: "BLINK BOX STUDIO — Bespoke Architectural Lighting",
   description:
-    "An independent creative studio designing brand identities, motion, and digital experiences that make the world look twice.",
+    "Bespoke pendants, centrepieces, and volumetric lighting installations. Designed, fabricated and commissioned in-house from our Bengaluru workshop.",
 };
 
 export const viewport: Viewport = {

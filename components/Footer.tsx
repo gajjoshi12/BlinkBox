@@ -13,9 +13,9 @@ export default function Footer() {
             <span className="font-display text-xl tracking-[0.26em]">BLINK BOX</span>
           </a>
           <p className="text-white/45 text-sm leading-relaxed max-w-sm">
-            An independent creative studio building brands, motion, and
-            digital experiences. Studio in Mumbai, workshop in Bengaluru.
-            Always taking introductions.
+            Bespoke architectural lighting — pendants, centrepieces, and
+            volumetric installations — designed, fabricated and commissioned
+            in-house. Workshop in Bengaluru, by appointment.
           </p>
         </div>
 
@@ -32,16 +32,16 @@ export default function Footer() {
         <div className="md:col-span-2">
           <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Practice</div>
           <ul className="space-y-2 text-sm text-white/65">
-            <li>Identity</li>
-            <li>Motion</li>
-            <li>Digital</li>
-            <li>Print</li>
+            <li>Pendants</li>
+            <li>Centrepieces</li>
+            <li>Material R&amp;D</li>
+            <li>Fabrication</li>
           </ul>
         </div>
 
         <div className="md:col-span-3">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">The Studio Letter</div>
-          <p className="text-sm text-white/55 mb-4">A short read, every other month. Work, process, things we found.</p>
+          <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">The Workshop Letter</div>
+          <p className="text-sm text-white/55 mb-4">A short read every other month. Commissions, materials, what we are testing.</p>
           <form
             onSubmit={(e) => e.preventDefault()}
             className="flex items-center border-b border-white/15 focus-within:border-[rgb(var(--lamp-glow))] transition-colors"
@@ -66,7 +66,7 @@ export default function Footer() {
           className="flex items-center gap-2"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[rgb(var(--lamp-glow))]" />
-          Booking new partnerships for Q3 2026
+          Currently accepting 2026 commissions
         </motion.div>
       </div>
     </footer>

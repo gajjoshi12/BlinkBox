@@ -7,14 +7,14 @@ const MIN_VISIBLE_MS = 2500;
 const MAX_VISIBLE_MS = 7000;
 
 const TAGLINES = [
-  "Booting the studio…",
-  "Sharpening pencils…",
-  "Stretching pixels…",
+  "Wiring up the workshop…",
+  "Cutting Tyvek panels…",
+  "Tuning the cove lighting…",
+  "Polishing the brass…",
   "Calibrating four colours…",
-  "Tuning typography…",
-  "Pouring coffee…",
-  "Warming the room…",
-  "Unboxing things…",
+  "Warming the filaments…",
+  "Squaring the section drawing…",
+  "Hanging the pendants…",
 ];
 
 const ARCH_COLOURS = ["#ed7959", "#d94350", "#8b5fbf", "#2a4cab"] as const;
@@ -37,8 +37,6 @@ export default function Preloader() {
     // download starts during the preloader rather than after it dismisses.
     const chunks = Promise.all([
       import("./three/Room3D").catch(() => null),
-      import("./three/Scene3D").catch(() => null),
-      import("./three/fixtures").catch(() => null),
     ]);
 
     const fonts =
@@ -166,7 +164,7 @@ export default function Preloader() {
                 BLINK BOX
               </div>
               <div className="mt-3 text-[10px] uppercase tracking-[0.5em] text-white/40">
-                Studio · An independent creative practice
+                Studio · Bespoke architectural lighting
               </div>
             </motion.div>
 
@@ -221,7 +219,7 @@ export default function Preloader() {
             ◐ Blink Box Studio
           </div>
           <div className="absolute top-8 right-8 text-[9px] uppercase tracking-[0.4em] text-white/25 font-mono">
-            Mumbai · Bengaluru
+            Bengaluru Workshop
           </div>
           <div className="absolute bottom-8 right-8 text-[9px] uppercase tracking-[0.4em] text-white/25 font-mono">
             v · 2026

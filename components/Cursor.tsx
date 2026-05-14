@@ -9,12 +9,10 @@ export default function Cursor() {
   // tight follower (the dot)
   const sx = useSpring(x, { stiffness: 700, damping: 32 });
   const sy = useSpring(y, { stiffness: 700, damping: 32 });
-  // slow halo (the spotlight)
-  const hx = useSpring(x, { stiffness: 80, damping: 16, mass: 1.2 });
-  const hy = useSpring(y, { stiffness: 80, damping: 16, mass: 1.2 });
-  // even lazier outer wash
-  const wx = useSpring(x, { stiffness: 30, damping: 14, mass: 2 });
-  const wy = useSpring(y, { stiffness: 30, damping: 14, mass: 2 });
+  // slow halo (the spotlight) — outer 60px-blur wash removed: it was the
+  // single most expensive cursor effect on every mousemove.
+  const hx = useSpring(x, { stiffness: 120, damping: 20, mass: 0.9 });
+  const hy = useSpring(y, { stiffness: 120, damping: 20, mass: 0.9 });
 
   const [hover, setHover] = useState(false);
   const [pressed, setPressed] = useState(false);
@@ -54,40 +52,22 @@ export default function Cursor() {
 
   return (
     <>
-      {/* OUTER WASH — drifts slowly, paints the page with lamp colour */}
-      <motion.div
-        style={{ x: wx, y: wy }}
-        className="pointer-events-none fixed top-0 left-0 z-[60] -translate-x-1/2 -translate-y-1/2 mix-blend-screen"
-        aria-hidden
-      >
-        <motion.div
-          animate={{ scale: hover ? 1.5 : 1, opacity: hover ? 0.55 : 0.35 }}
-          transition={{ duration: 0.8 }}
-          className="w-[36rem] h-[36rem] rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(var(--lamp-glow),0.18) 0%, transparent 65%)",
-            filter: "blur(60px)",
-          }}
-        />
-      </motion.div>
-
-      {/* MIDDLE HALO — tighter, brighter */}
+      {/* HALO — single soft glow following the dot. No CSS filter blur (was 24px,
+          still expensive per-frame). The radial gradient already feels soft enough. */}
       <motion.div
         style={{ x: hx, y: hy }}
-        className="pointer-events-none fixed top-0 left-0 z-[100] -translate-x-1/2 -translate-y-1/2 mix-blend-screen"
+        className="pointer-events-none fixed top-0 left-0 z-[100] -translate-x-1/2 -translate-y-1/2 mix-blend-screen will-change-transform"
         aria-hidden
       >
         <motion.div
           animate={{
             scale: pressed ? 0.7 : hover ? 2.4 : 1,
-            opacity: hover ? 0.95 : 0.55,
+            opacity: hover ? 0.85 : 0.45,
           }}
           transition={{ duration: 0.35 }}
-          className="w-32 h-32 rounded-full"
+          className="w-28 h-28 rounded-full"
           style={{
-            background: "radial-gradient(circle, rgb(var(--lamp-glow)) 0%, transparent 60%)",
-            filter: "blur(24px)",
+            background: "radial-gradient(circle, rgba(var(--lamp-glow),0.85) 0%, transparent 65%)",
           }}
         />
       </motion.div>

@@ -133,7 +133,7 @@ export default function Navigation() {
                 Begin a Project →
               </a>
               <div className="mt-8 text-center text-[10px] uppercase tracking-[0.3em] text-white/30">
-                Mumbai · Bengaluru · Always curious
+                Bengaluru workshop · By appointment
               </div>
             </motion.div>
           </motion.div>

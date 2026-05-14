@@ -26,30 +26,20 @@ export default function Contact() {
             <span className="block italic gradient-temp">hello.</span>
           </h2>
           <p className="text-white/55 max-w-md leading-relaxed mb-12">
-            We take on a small number of new partnerships each year. Tell us
-            about the brand — what you're building, who it's for, and the
-            moment you'd like a stranger to remember.
+            We take on a small number of commissions each year. Tell us about
+            the room — the architecture, the volume, the hours it will be
+            lived in — and the kind of light it is asking for.
           </p>
 
           <div className="space-y-6 text-sm">
             <div>
               <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-2">
-                Studio
+                Workshop
               </div>
               <div className="text-white/80">
-                Studio City Loft 4B
+                Blinkbox Studio Pvt Ltd
                 <br />
-                Mumbai 400070, India
-              </div>
-            </div>
-            <div>
-              <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-2">
-                Annex
-              </div>
-              <div className="text-white/80">
-                Indiranagar Workshop
-                <br />
-                Bengaluru 560038, India
+                Bengaluru, India
               </div>
             </div>
             <div>
@@ -57,10 +47,29 @@ export default function Contact() {
                 Direct
               </div>
               <a
-                href="mailto:hello@blinkbox.studio"
+                href="mailto:connect@blinkboxstudio.in"
+                className="text-white/90 hover:text-[rgb(var(--lamp-glow))] transition-colors block"
+              >
+                connect@blinkboxstudio.in
+              </a>
+              <a
+                href="tel:+919971797740"
+                className="text-white/90 hover:text-[rgb(var(--lamp-glow))] transition-colors block mt-1"
+              >
+                +91 99717 97740
+              </a>
+            </div>
+            <div>
+              <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-2">
+                Online
+              </div>
+              <a
+                href="https://www.blinkboxlighting.com"
+                target="_blank"
+                rel="noreferrer"
                 className="text-white/90 hover:text-[rgb(var(--lamp-glow))] transition-colors"
               >
-                hello@blinkbox.studio
+                www.blinkboxlighting.com
               </a>
             </div>
           </div>
@@ -104,17 +113,16 @@ export default function Contact() {
               <div className="space-y-8">
                 <Field label="Your name" name="name" />
                 <Field label="Email" name="email" type="email" />
-                <Field label="Company / brand" name="company" />
+                <Field label="Project site / city" name="location" />
                 <SelectField
-                  label="What's the work?"
+                  label="Type of commission"
                   name="type"
                   options={[
-                    "Brand Identity",
-                    "Motion / Film",
-                    "Digital / Website",
-                    "Campaign · Art Direction",
-                    "Packaging / Print",
-                    "Creative Direction · Retainer",
+                    "Bespoke Pendant",
+                    "Architectural Centrepiece",
+                    "Atrium / Volumetric Install",
+                    "Custom Chandelier",
+                    "Material R&D",
                     "Other",
                   ]}
                 />

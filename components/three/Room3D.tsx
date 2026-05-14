@@ -1,8 +1,7 @@
 "use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { ContactShadows, MeshReflectorMaterial } from "@react-three/drei";
-import { useRef, useEffect, useMemo, Suspense } from "react";
+import { useRef, useEffect, useMemo, Suspense, useState } from "react";
 import * as THREE from "three";
 import { useTemperature } from "../TemperatureProvider";
 import { kelvinToRgb } from "@/lib/kelvin";
@@ -37,16 +36,25 @@ const leafColorLight = "#3a6038";
 function useScrollProgress() {
   const ref = useRef(0);
   useEffect(() => {
-    const update = () => {
+    let rafId = 0;
+    let scheduled = false;
+    const compute = () => {
       const max =
         document.documentElement.scrollHeight - window.innerHeight;
       ref.current =
         max > 0 ? Math.max(0, Math.min(1, window.scrollY / max)) : 0;
+      scheduled = false;
     };
-    update();
+    const update = () => {
+      if (scheduled) return;
+      scheduled = true;
+      rafId = requestAnimationFrame(compute);
+    };
+    compute();
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
@@ -57,12 +65,27 @@ function useScrollProgress() {
 function useCursorOffset() {
   const ref = useRef({ x: 0, y: 0 });
   useEffect(() => {
-    const move = (e: MouseEvent) => {
-      ref.current.x = (e.clientX / window.innerWidth) * 2 - 1;
-      ref.current.y = -((e.clientY / window.innerHeight) * 2 - 1);
+    let rafId = 0;
+    let nextX = 0;
+    let nextY = 0;
+    let scheduled = false;
+    const apply = () => {
+      ref.current.x = nextX;
+      ref.current.y = nextY;
+      scheduled = false;
     };
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
+    const move = (e: MouseEvent) => {
+      nextX = (e.clientX / window.innerWidth) * 2 - 1;
+      nextY = -((e.clientY / window.innerHeight) * 2 - 1);
+      if (scheduled) return;
+      scheduled = true;
+      rafId = requestAnimationFrame(apply);
+    };
+    window.addEventListener("mousemove", move, { passive: true });
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("mousemove", move);
+    };
   }, []);
   return ref;
 }
@@ -74,38 +97,26 @@ function useCursorOffset() {
 function Shell() {
   return (
     <group>
-      {/* Floor — reflective dark wood */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
+      {/* Floor — dark wood (was MeshReflectorMaterial; that was the single biggest cost) */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
         <planeGeometry args={[18, 14]} />
-        <MeshReflectorMaterial
-          blur={[300, 100]}
-          resolution={512}
-          mixBlur={1}
-          mixStrength={1.2}
-          roughness={0.85}
-          depthScale={0.6}
-          minDepthThreshold={0.4}
-          maxDepthThreshold={1.4}
-          color={darkWoodColor}
-          metalness={0.2}
-          mirror={0}
-        />
+        <meshStandardMaterial color={darkWoodColor} roughness={0.7} metalness={0.25} />
       </mesh>
 
       {/* Back wall */}
-      <mesh position={[0, 4, -5]} receiveShadow>
+      <mesh position={[0, 4, -5]}>
         <planeGeometry args={[18, 8]} />
         <meshStandardMaterial color={wallColor} roughness={0.95} />
       </mesh>
 
       {/* Left wall */}
-      <mesh rotation={[0, Math.PI / 2, 0]} position={[-9, 4, 0]} receiveShadow>
+      <mesh rotation={[0, Math.PI / 2, 0]} position={[-9, 4, 0]}>
         <planeGeometry args={[10, 8]} />
         <meshStandardMaterial color={wallColor} roughness={0.95} />
       </mesh>
 
       {/* Right wall */}
-      <mesh rotation={[0, -Math.PI / 2, 0]} position={[9, 4, 0]} receiveShadow>
+      <mesh rotation={[0, -Math.PI / 2, 0]} position={[9, 4, 0]}>
         <planeGeometry args={[10, 8]} />
         <meshStandardMaterial color={wallColor} roughness={0.95} />
       </mesh>
@@ -117,17 +128,17 @@ function Shell() {
       </mesh>
 
       {/* Floor rug — layered for depth */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.005, -1]} receiveShadow>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.005, -1]}>
         <planeGeometry args={[6, 4]} />
         <meshStandardMaterial color="#4a3220" roughness={1} />
       </mesh>
       {/* rug border */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.006, -1]} receiveShadow>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.006, -1]}>
         <ringGeometry args={[2.6, 2.85, 32]} />
         <meshStandardMaterial color="#3a2418" roughness={1} side={THREE.DoubleSide} />
       </mesh>
       {/* central rug medallion */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.007, -1]} receiveShadow>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.007, -1]}>
         <ringGeometry args={[0.6, 0.9, 24]} />
         <meshStandardMaterial color="#6a4828" roughness={1} side={THREE.DoubleSide} />
       </mesh>
@@ -199,7 +210,7 @@ function Sofa() {
   return (
     <group position={[0, 0, -1.5]}>
       {/* base */}
-      <mesh position={[0, 0.42, 0]} castShadow receiveShadow>
+      <mesh position={[0, 0.42, 0]} castShadow>
         <boxGeometry args={[4.2, 0.6, 1.5]} />
         <meshStandardMaterial color={sofaColor} roughness={0.95} />
       </mesh>
@@ -262,17 +273,10 @@ function Sofa() {
 function CoffeeTable() {
   return (
     <group position={[0, 0, 0.5]}>
-      {/* glass top */}
-      <mesh position={[0, 0.42, 0]} castShadow receiveShadow>
+      {/* glass top — plain material, transmission was expensive */}
+      <mesh position={[0, 0.42, 0]}>
         <boxGeometry args={[1.6, 0.04, 1.0]} />
-        <meshPhysicalMaterial
-          color="#1a1410"
-          metalness={0.2}
-          roughness={0.1}
-          transmission={0.4}
-          ior={1.4}
-          thickness={0.3}
-        />
+        <meshStandardMaterial color="#1a1410" metalness={0.5} roughness={0.15} />
       </mesh>
       {/* legs */}
       {[
@@ -314,7 +318,7 @@ function Console({
   return (
     <group position={[-3.5, 0, -4.65]}>
       {/* top */}
-      <mesh position={[0, 0.86, 0]} castShadow receiveShadow>
+      <mesh position={[0, 0.86, 0]} castShadow>
         <boxGeometry args={[2.4, 0.06, 0.45]} />
         <meshStandardMaterial color="#2a1810" metalness={0.4} roughness={0.4} />
       </mesh>
@@ -460,8 +464,7 @@ function FiddleLeafFig({ position }: { position: [number, number, number] }) {
             key={`crown-${i}`}
             position={[Math.cos(a) * 0.15, 3.1, Math.sin(a) * 0.15]}
             rotation={[0.3, a, 0.4]}
-            castShadow
-          >
+                     >
             <sphereGeometry args={[0.45, 12, 8]} />
             <meshStandardMaterial color={leafColorLight} roughness={0.7} />
           </mesh>
@@ -546,8 +549,7 @@ function SnakePlant({ position }: { position: [number, number, number] }) {
           key={i}
           position={[Math.cos(b.angle) * 0.05, 0.4 + b.h / 2, Math.sin(b.angle) * 0.05]}
           rotation={[b.tilt, b.angle, b.tilt * 0.5]}
-          castShadow
-        >
+                 >
           <coneGeometry args={[0.03, b.h, 4]} />
           <meshStandardMaterial color={leafColor} roughness={0.7} />
         </mesh>
@@ -615,8 +617,7 @@ function Bookshelf({ position }: { position: [number, number, number] }) {
                   key={i}
                   position={[x + w / 2, 0.04 + h / 2, 0]}
                   rotation={[0, 0, tiltLast ? 0.15 : 0]}
-                  castShadow
-                >
+                                 >
                   <boxGeometry args={[w, h, 0.3]} />
                   <meshStandardMaterial color={color} roughness={0.7} />
                 </mesh>
@@ -665,7 +666,7 @@ function SideTable({ position }: { position: [number, number, number] }) {
   return (
     <group position={position}>
       {/* round marble top */}
-      <mesh position={[0, 0.6, 0]} castShadow receiveShadow>
+      <mesh position={[0, 0.6, 0]} castShadow>
         <cylinderGeometry args={[0.32, 0.32, 0.05, 28]} />
         <meshStandardMaterial color="#d8c8a8" roughness={0.4} metalness={0.05} />
       </mesh>
@@ -817,17 +818,13 @@ function Chandelier({
         <cylinderGeometry args={[0.05, 0.04, 0.55, 16]} />
         <meshStandardMaterial color={brassColor} metalness={1} roughness={0.32} />
       </mesh>
-      {/* central crystal sphere */}
+      {/* central crystal sphere — plain emissive, no transmission */}
       <mesh>
         <icosahedronGeometry args={[0.16, 1]} />
-        <meshPhysicalMaterial
+        <meshStandardMaterial
           color={color}
-          metalness={0.3}
-          roughness={0.06}
-          clearcoat={1}
-          transmission={0.55}
-          ior={1.5}
-          thickness={0.4}
+          metalness={0.4}
+          roughness={0.15}
           emissive={color}
           emissiveIntensity={intensity * 1.5}
           toneMapped={false}
@@ -879,7 +876,7 @@ function Chandelier({
             </mesh>
             {/* glow shell */}
             <mesh position={[x, 0.4, z]}>
-              <sphereGeometry args={[0.13, 12, 12]} />
+              <sphereGeometry args={[0.13, 10, 10]} />
               <meshBasicMaterial
                 color={color}
                 transparent
@@ -888,27 +885,17 @@ function Chandelier({
                 blending={THREE.AdditiveBlending}
               />
             </mesh>
-            <pointLight
-              position={[x, 0.4, z]}
-              color={color}
-              intensity={intensity * 0.4}
-              distance={2.5}
-              decay={2}
-            />
           </group>
         );
       })}
 
-      {/* central downward light - the big one, casts shadow */}
+      {/* central downward light — single light, no shadow (all 10 per-bulb lights removed) */}
       <pointLight
         position={[0, -0.2, 0]}
         color={color}
-        intensity={intensity * 2}
-        distance={8}
+        intensity={intensity * 4}
+        distance={9}
         decay={2}
-        castShadow
-        shadow-mapSize={[1024, 1024]}
-        shadow-bias={-0.0005}
       />
     </group>
   );
@@ -1245,43 +1232,21 @@ function Scene() {
       <CoveAnimated intensitiesRef={intensities} color={color} />
 
       {/* base ambient — room is visible at baseline even with all lamps off */}
-      <ambientLight intensity={0.35} color="#8a9ab8" />
+      <ambientLight intensity={0.45} color="#8a9ab8" />
 
-      {/* moonlight-style key from above-front, casts soft shadows */}
+      {/* moonlight-style key from above-front — no shadow (was 1024x1024, very expensive) */}
       <directionalLight
         position={[3, 9, 5]}
-        intensity={0.55}
+        intensity={0.65}
         color="#c8d4e8"
-        castShadow
-        shadow-mapSize={[1024, 1024]}
-        shadow-camera-left={-10}
-        shadow-camera-right={10}
-        shadow-camera-top={10}
-        shadow-camera-bottom={-10}
       />
 
       {/* warm fill from camera side */}
-      <pointLight position={[0, 3, 6]} intensity={0.25} color="#d4a878" distance={12} />
+      <pointLight position={[0, 3, 6]} intensity={0.3} color="#d4a878" distance={12} />
 
-      {/* always-on subtle ceiling recessed cans, 4 around the room */}
-      {[
-        [-4, 7.6, -3],
-        [4, 7.6, -3],
-        [-4, 7.6, 1],
-        [4, 7.6, 1],
-      ].map(([x, y, z], i) => (
-        <pointLight key={i} position={[x, y, z]} intensity={0.15} color="#f0e0c8" distance={6} decay={2} />
-      ))}
-
-      {/* contact shadow for soft grounding */}
-      <ContactShadows
-        position={[0, 0.01, 0]}
-        opacity={0.4}
-        scale={20}
-        blur={2}
-        far={6}
-        color="#000"
-      />
+      {/* recessed cans — 2 instead of 4 */}
+      <pointLight position={[-4, 7.6, -1]} intensity={0.18} color="#f0e0c8" distance={7} decay={2} />
+      <pointLight position={[4, 7.6, -1]} intensity={0.18} color="#f0e0c8" distance={7} decay={2} />
     </group>
   );
 }
@@ -1301,26 +1266,7 @@ function ChandelierAnimated({
   const intensityState = useRef(0);
   useFrame(() => {
     intensityState.current = intensitiesRef.current.chandelier;
-    if (!wrapper.current) return;
-    wrapper.current.traverse((obj: any) => {
-      if (obj.isPointLight) {
-        // base intensity will be multiplied — we re-read from userData
-        if (obj.userData.baseIntensity == null)
-          obj.userData.baseIntensity = obj.intensity;
-        obj.intensity =
-          obj.userData.baseIntensity * (intensityState.current / 1);
-      }
-      if (obj.isMesh && obj.material && obj.material.emissive) {
-        if (obj.userData.baseEmissive == null) {
-          obj.userData.baseEmissive = obj.material.emissiveIntensity ?? 1;
-        }
-        // skip materials that shouldn't dim with chandelier (none here, all dim together)
-        obj.material.emissiveIntensity =
-          obj.userData.baseEmissive * intensityState.current;
-        obj.material.color.copy(color);
-        if (obj.material.emissive) obj.material.emissive.copy(color);
-      }
-    });
+    intensityDriver(wrapper, intensityState, color);
   });
   return (
     <group ref={wrapper}>
@@ -1329,7 +1275,30 @@ function ChandelierAnimated({
   );
 }
 
-/* Generic intensity driver — keeps things DRY */
+/* Generic intensity driver — caches lights/emissives once, then writes
+   intensities directly each frame. Avoids the full Group.traverse() per tick. */
+type DriverCache = {
+  lights: { light: THREE.PointLight; base: number }[];
+  emissives: { mat: any; base: number }[];
+};
+
+function ensureCache(g: THREE.Group): DriverCache {
+  const ud = g.userData as { __cache?: DriverCache };
+  if (ud.__cache) return ud.__cache;
+  const lights: DriverCache["lights"] = [];
+  const emissives: DriverCache["emissives"] = [];
+  g.traverse((obj: any) => {
+    if (obj.isPointLight) {
+      lights.push({ light: obj, base: obj.intensity || 1 });
+    }
+    if (obj.isMesh && obj.material && "emissiveIntensity" in obj.material) {
+      emissives.push({ mat: obj.material, base: obj.material.emissiveIntensity ?? 0 });
+    }
+  });
+  ud.__cache = { lights, emissives };
+  return ud.__cache;
+}
+
 function intensityDriver(
   groupRef: React.RefObject<THREE.Group | null>,
   intensityRef: React.MutableRefObject<number>,
@@ -1338,20 +1307,17 @@ function intensityDriver(
   const g = groupRef.current;
   if (!g) return;
   const I = intensityRef.current;
-  g.traverse((obj: any) => {
-    if (obj.isPointLight) {
-      if (obj.userData.baseIntensity == null)
-        obj.userData.baseIntensity = obj.intensity || 1;
-      obj.intensity = obj.userData.baseIntensity * I;
-      if (color) obj.color.copy(color);
-    }
-    if (obj.isMesh && obj.material && "emissiveIntensity" in obj.material) {
-      if (obj.userData.baseEmissive == null)
-        obj.userData.baseEmissive = obj.material.emissiveIntensity ?? 0;
-      obj.material.emissiveIntensity = obj.userData.baseEmissive * I;
-      if (color && obj.material.emissive) obj.material.emissive.copy(color);
-    }
-  });
+  const cache = ensureCache(g);
+  for (let i = 0; i < cache.lights.length; i++) {
+    const l = cache.lights[i];
+    l.light.intensity = l.base * I;
+    if (color) l.light.color.copy(color);
+  }
+  for (let i = 0; i < cache.emissives.length; i++) {
+    const e = cache.emissives[i];
+    e.mat.emissiveIntensity = e.base * I;
+    if (color && e.mat.emissive) e.mat.emissive.copy(color);
+  }
 }
 
 function FloorLampAnimated({
@@ -1531,16 +1497,25 @@ function CoveAnimated({
 /* ============================================================ */
 
 export default function Room3D() {
+  // Pause rendering when tab is hidden — saves GPU when user switches away.
+  const [active, setActive] = useState(true);
+  useEffect(() => {
+    const onVis = () => setActive(!document.hidden);
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, []);
+
   return (
     <Canvas
-      shadows
+      frameloop={active ? "always" : "never"}
       camera={{ position: [0, 2, 7], fov: 50 }}
       gl={{
-        antialias: true,
+        antialias: false,
+        powerPreference: "high-performance",
         toneMapping: THREE.ACESFilmicToneMapping,
         toneMappingExposure: 1.15,
       }}
-      dpr={[1, 1.5]}
+      dpr={[1, 1]}
     >
       <fog attach="fog" args={["#0a0810", 20, 40]} />
       <color attach="background" args={["#0a0810"]} />

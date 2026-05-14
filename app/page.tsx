@@ -5,7 +5,6 @@ import Philosophy from "@/components/Philosophy";
 import Services from "@/components/Services";
 import Projects from "@/components/Projects";
 import Process from "@/components/Process";
-import Showroom from "@/components/Showroom";
 import SceneComposer from "@/components/SceneComposer";
 import Clients from "@/components/Clients";
 import Contact from "@/components/Contact";
@@ -15,6 +14,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import Cursor from "@/components/Cursor";
 import DustMotes from "@/components/DustMotes";
 import Preloader from "@/components/Preloader";
+import EventInvite from "@/components/EventInvite";
 
 export default function Home() {
   return (
@@ -27,6 +27,7 @@ export default function Home() {
       <ScrollProgress />
       <TemperatureToggle />
       <Cursor />
+      <EventInvite />
 
       <div className="relative z-10">
         <Hero />
@@ -34,7 +35,6 @@ export default function Home() {
         <Services />
         <Projects />
         <Process />
-        <Showroom />
         <SceneComposer />
         <Clients />
         <Contact />

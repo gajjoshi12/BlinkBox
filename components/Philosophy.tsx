@@ -15,9 +15,9 @@ export default function Philosophy() {
   const y2 = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   const lines = [
-    "A brand isn't a logo.",
-    "It is the moment a stranger",
-    "decides to lean in.",
+    "A bespoke light succeeds",
+    "when the client stops seeing",
+    "the labour behind it.",
   ];
 
   return (
@@ -75,9 +75,9 @@ export default function Philosophy() {
             transition={{ duration: 1, delay: 0.6 }}
             className="text-sm text-white/55 leading-relaxed"
           >
-            A product gives someone a reason. A brand gives them a feeling.
-            We work in the gap between the two — colour, type, motion, story —
-            until the feeling is unmistakable.
+            Bespoke lighting is never only about form. It is the negotiation
+            between material behaviour, engineering access, craft patience, and
+            the emotional response of the people who live with the result.
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -86,8 +86,8 @@ export default function Philosophy() {
             transition={{ duration: 1, delay: 0.8 }}
             className="text-sm text-white/55 leading-relaxed"
           >
-            For a decade we have built that feeling for founders, makers,
-            and houses with something honest to say.
+            For a decade we have built that result for residences, ateliers,
+            and houses like Google — one room, one volume of light, at a time.
           </motion.p>
           <motion.div
             initial={{ scaleX: 0 }}
@@ -98,9 +98,9 @@ export default function Philosophy() {
           />
           <div className="grid grid-cols-3 gap-4 pt-4">
             {[
-              { n: 140, suffix: "+", l: "Projects" },
-              { n: 32, suffix: "", l: "Brands" },
-              { n: 10, suffix: "yr", l: "Studio" },
+              { n: 140, suffix: "+", l: "Commissions" },
+              { n: 32, suffix: "", l: "Architects" },
+              { n: 10, suffix: "yr", l: "Workshop" },
             ].map((s, i) => (
               <motion.div
                 key={s.l}

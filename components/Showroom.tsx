@@ -27,47 +27,47 @@ const fixtures: {
   {
     id: "crown",
     name: "Couronne",
-    ref: "BBX · ID · 12",
+    ref: "BBX · PD · 12",
     spec: [
-      { label: "Discipline", value: "Identity" },
-      { label: "Deliverable", value: "Full system" },
-      { label: "Typical run", value: "10–14 wks" },
-      { label: "Includes", value: "Naming · Mark · Type" },
-      { label: "Guidelines", value: "Living, hosted" },
-      { label: "Hand-off", value: "Figma + PDF + tokens" },
+      { label: "Form", value: "Volumetric pendant" },
+      { label: "Skin", value: "Tyvek paper" },
+      { label: "Cage", value: "Oval metal armature" },
+      { label: "Drop", value: "Up to 4.5 m" },
+      { label: "Access", value: "Magnetic lamp lock" },
+      { label: "Build", value: "Made to order" },
     ],
     blurb:
-      "Our flagship engagement. A complete identity system — mark, type, voice, palette, applications — drawn by hand and shipped with a living set of guidelines. Built for founders, houses, and category-defining brands.",
+      "A volumetric pendant in the language of our living-area commission. Oval metal cage wrapped in precisely cut Tyvek paper panels, with a magnetic access mechanism engineered so the lamp can be reached and locked back even at four-plus metres.",
   },
   {
     id: "linear",
     name: "Trait",
-    ref: "BBX · MO · 07",
+    ref: "BBX · LN · 07",
     spec: [
-      { label: "Discipline", value: "Motion" },
-      { label: "Format", value: "Film · Loops · Stings" },
-      { label: "Length", value: "15s – 3min" },
-      { label: "Audio", value: "Original score" },
-      { label: "Delivery", value: "4K · ProRes · WebM" },
-      { label: "Iterations", value: "Two passes included" },
+      { label: "Form", value: "Linear pendant" },
+      { label: "Length", value: "1.8 – 3.6 m" },
+      { label: "Body", value: "Extruded brass · burnished" },
+      { label: "Bulbs", value: "7 × E27 Edison" },
+      { label: "Cord", value: "Twisted silk" },
+      { label: "Dimming", value: "0–100% trailing edge" },
     ],
     blurb:
-      "Brand film and motion design, scored and cut in-house. We compose the story like a film crew — title sequences, product reveals, launch sizzles — never the after-effects-template kind.",
+      "A horizontal pendant carved from a single extruded brass bar. Seven warm Edison bulbs on twisted silk cord — the defining gesture above kitchen islands, library tables, and long boardrooms.",
   },
   {
     id: "cascade",
     name: "Cascade",
-    ref: "BBX · DG · 44",
+    ref: "BBX · CS · 44",
     spec: [
-      { label: "Discipline", value: "Digital" },
-      { label: "Stack", value: "Next.js · Three.js" },
-      { label: "Engineering", value: "In-house" },
-      { label: "Performance", value: "Lighthouse 95+" },
-      { label: "CMS", value: "Sanity · Contentful" },
-      { label: "Handover", value: "Repo + docs + retainer" },
+      { label: "Form", value: "Cascading chandelier" },
+      { label: "Elements", value: "56 hand-cut glass" },
+      { label: "Tiers", value: "5" },
+      { label: "Diameter", value: "190 cm" },
+      { label: "Drop", value: "Up to 2.6 m" },
+      { label: "Bulbs", value: "4 × G9 · concealed" },
     ],
     blurb:
-      "Marketing sites, product configurators, and launch microsites. Designed and engineered by the same team — no hand-off seam between visual and code, every pixel performance-budgeted.",
+      "A waterfall of fifty-six borosilicate elements tumbling around a concealed warm-white core. The glass transmits and re-emits the light. Designed for stairwells, atria, and double-height entrance halls.",
   },
 ];
 
@@ -92,13 +92,13 @@ export default function Showroom() {
             </span>
             <span className="h-px w-12 bg-white/15" />
             <span className="text-[10px] uppercase tracking-[0.3em] text-white/40">
-              Inside the Studio
+              Signature Pieces
             </span>
           </div>
           <div className="flex items-end justify-between flex-wrap gap-6">
             <h2 className="font-display font-extralight text-[clamp(2rem,5vw,4.5rem)] leading-[1.05] max-w-3xl">
-              <span className="block">Three signature engagements.</span>
-              <span className="block italic text-white/60">Drag to rotate. Tune the mood.</span>
+              <span className="block">Three signature fixtures.</span>
+              <span className="block italic text-white/60">Drag to rotate. Tune the light.</span>
             </h2>
             <div className="text-right">
               <div className="text-[10px] uppercase tracking-[0.3em] text-white/30">Live mood</div>
@@ -191,7 +191,7 @@ export default function Showroom() {
                 </div>
                 <h3 className="font-display text-4xl text-white/95 mb-2">{f.name}</h3>
                 <div className="text-[11px] uppercase tracking-[0.25em] text-[rgb(var(--lamp-glow))] mb-6">
-                  Studio engagement · scoped to project
+                  Made to order · scoped to room
                 </div>
                 <p className="text-sm text-white/55 leading-relaxed mb-8">{f.blurb}</p>
 
@@ -257,7 +257,7 @@ export default function Showroom() {
               className="group flex items-center justify-between border border-white/10 hover:border-[rgb(var(--lamp-glow))]/40 px-6 py-5 transition-colors"
             >
               <span className="text-[11px] uppercase tracking-[0.3em] text-white/80 group-hover:text-white">
-                Talk to us about this
+                Enquire about this fixture
               </span>
               <span className="text-[rgb(var(--lamp-glow))] text-lg">→</span>
             </a>

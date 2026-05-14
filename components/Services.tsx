@@ -6,39 +6,39 @@ import Tilt from "./Tilt";
 const services = [
   {
     n: "01",
-    title: "Brand Identity",
-    desc: "Names, marks, type systems, voice. A complete identity built to survive twenty years and a thousand contexts.",
-    tags: ["Naming", "Logomarks", "Type systems", "Guidelines"],
+    title: "Bespoke Pendants",
+    desc: "One-off pendants and chandeliers built around the room. Tyvek skins, hand-cut paper, blown glass, metal cages — material chosen to behave correctly under the light.",
+    tags: ["Tyvek", "Paper", "Glass", "Metal cages"],
   },
   {
     n: "02",
-    title: "Motion Design",
-    desc: "Title sequences, brand films, product reveals, sizzles. Frames composed like a film crew — not exported like a template.",
-    tags: ["Title design", "Brand films", "Explainers", "Sizzles"],
+    title: "Architectural Centrepieces",
+    desc: "Volumetric ceiling features and atrium installations. FRP, fabric, and layered cove lighting fabricated as a single, maintainable sculptural body.",
+    tags: ["FRP", "Stretch fabric", "Cove lighting", "Atrium scale"],
   },
   {
     n: "03",
-    title: "Digital Experiences",
-    desc: "Marketing sites, microsites, configurators, launch pages. We design and build, end to end, in-house.",
-    tags: ["Next.js", "Three.js", "Webflow", "Headless"],
+    title: "Material R&D",
+    desc: "Translucency, diffusion, rib spacing, sag behaviour. We prototype until the material does what light asks it to do, then we document the recipe.",
+    tags: ["Prototyping", "Diffusion testing", "Substrate trials", "Sag studies"],
   },
   {
     n: "04",
-    title: "Campaign & Art Direction",
-    desc: "Launches, look-books, social systems. A single visual language stretched across every surface a customer will meet.",
-    tags: ["Launches", "Look-books", "OOH", "Social systems"],
+    title: "Engineering & Access",
+    desc: "Magnetic lamp-access mechanisms, split-half logistics, anti-oxidation chemistry. Every commission is designed to be installed once and serviced forever.",
+    tags: ["Magnetic access", "Anti-oxidation", "Split assembly", "Service-first"],
   },
   {
     n: "05",
-    title: "Packaging & Print",
-    desc: "Unboxing as a first conversation. Structural design, foil-and-substrate samples, press supervision, the works.",
-    tags: ["Structural", "Foils", "Editorial", "Press oversight"],
+    title: "Fabrication & Site",
+    desc: "In-house build at our Bengaluru workshop with FRP experts, lighting electricians, and finest painters working in one room. Dispatch, install, re-weld, refinish.",
+    tags: ["Workshop build", "Painting", "Welding", "Site install"],
   },
   {
     n: "06",
-    title: "Creative Direction",
-    desc: "Embedded with founder teams. Long-form partnership, not a one-shot deck — from product naming through to launch night.",
-    tags: ["Embedded", "Retainer", "Workshop", "Advisory"],
+    title: "Design Consultation",
+    desc: "Site visits, working drawings, SketchUp sections, lighting parameters, logistics. We sit with the architect and the client until the brief is unambiguous.",
+    tags: ["ACAD", "SketchUp", "Section drawings", "Lighting calcs"],
   },
 ];
 
@@ -59,7 +59,7 @@ export default function Services() {
             </div>
             <h2 className="font-display font-extralight text-[clamp(2rem,5vw,4.5rem)] leading-[1.05] max-w-3xl">
               <span className="block">Six disciplines.</span>
-              <span className="block italic text-white/60">One restless way of seeing.</span>
+              <span className="block italic text-white/60">From the first sketch to the last bulb change.</span>
             </h2>
           </div>
         </div>

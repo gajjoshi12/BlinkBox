@@ -11,7 +11,9 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     }
 
     const lenis = new Lenis({
-      duration: 1.4,
+      // Snappier than the original 1.4s — long durations make the page
+      // feel "stuck" when paired with heavy scroll-tied animations.
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       wheelMultiplier: 1,

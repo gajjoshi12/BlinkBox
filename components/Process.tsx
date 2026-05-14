@@ -6,33 +6,33 @@ import { useRef } from "react";
 const steps = [
   {
     n: "01",
-    title: "Listen",
-    duration: "Week 1–2",
-    desc: "Workshops with founders, customers, and the team. We hunt for the one true sentence — the thing the brand keeps saying even when no one's watching.",
+    title: "Site Visit",
+    duration: "Week 1",
+    desc: "We meet on site as a kick-off. We measure the volume, study sight lines, read the architect's intent, and listen to how the room is going to be used at every hour of the day.",
   },
   {
     n: "02",
-    title: "Sketch",
-    duration: "Week 3–5",
-    desc: "Mood films, type studies, naming, narrative directions. Three concept routes, each presented as a real moment in the world, not a deck slide.",
+    title: "Working Drawings",
+    duration: "Week 2–4",
+    desc: "ACAD detailing, SketchUp sections, frame schedules, lighting parameters, logistics, maintenance access. Drawings submitted for the architect's and client's consent.",
   },
   {
     n: "03",
-    title: "Design",
-    duration: "Week 6–12",
-    desc: "Identity system, motion principles, art direction, sample applications — packaging, print, social, signage, screen — all drawn in-house.",
+    title: "Material R&D",
+    duration: "Week 3–6",
+    desc: "Substrate trials — Tyvek, glass, FRP, fabric. We prototype until rib spacing, diffusion, and sag behave correctly. Recipes documented before fabrication begins.",
   },
   {
     n: "04",
-    title: "Build",
-    duration: "Week 13–18",
-    desc: "Web, film, and print production. Engineering by our developers, scoring by our partners, supervision through every press check.",
+    title: "Fabrication",
+    duration: "Week 6–12",
+    desc: "Workshop build with FRP experts, lighting electricians and painters working in one room. Where logistics demand it, the piece is split for transport and re-joined on site.",
   },
   {
     n: "05",
-    title: "Launch",
-    duration: "Launch + 90 days",
-    desc: "Launch night, then the long quiet after — tuning headlines, watching the data, shipping the second wave the team will need by month two.",
+    title: "Installation",
+    duration: "On site",
+    desc: "Dispatch in dedicated transport. On-site assembly, re-welding, re-painting, lamp aiming, commissioning. We leave when the client smiles at the result — not before.",
   },
 ];
 
@@ -60,7 +60,7 @@ export default function Process() {
           </div>
           <h2 className="font-display font-extralight text-[clamp(2rem,5vw,4.5rem)] leading-[1.05] max-w-3xl">
             <span className="block">Five movements.</span>
-            <span className="block italic text-white/60">From the first conversation to the long aftermath.</span>
+            <span className="block italic text-white/60">From first site visit to first switch-on.</span>
           </h2>
         </div>
 

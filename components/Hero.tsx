@@ -15,7 +15,7 @@ export default function Hero() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
 
   // letter stagger
-  const word = "Wonder.";
+  const word = "Light.";
 
   return (
     <section
@@ -35,7 +35,7 @@ export default function Hero() {
         >
           <span className="h-px w-12 bg-white/20" />
           <span className="text-[10px] uppercase tracking-[0.5em] text-white/50">
-            An independent creative studio
+            Bespoke lighting · India
           </span>
           <span className="h-px w-12 bg-white/20" />
         </motion.div>
@@ -47,7 +47,7 @@ export default function Hero() {
             transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
             className="block italic font-extralight text-white/90"
           >
-            We make
+            We sculpt
           </motion.span>
           <span className="block">
             {word.split("").map((c, i) => (
@@ -74,9 +74,10 @@ export default function Hero() {
           transition={{ duration: 1, delay: 1.4 }}
           className="mt-10 max-w-xl mx-auto text-base md:text-lg text-white/55 leading-relaxed font-light"
         >
-          Brand identity, motion, and digital experiences for ambitious teams.
-          We don't ship deliverables —
-          <span className="text-white/80"> we build things people remember.</span>
+          Bespoke architectural lighting — pendants, coves, centrepieces and
+          installations — fabricated and commissioned in-house. We don't sell
+          fixtures off a catalogue —
+          <span className="text-white/80"> we build the object the room is asking for.</span>
         </motion.p>
 
         <motion.div
@@ -86,7 +87,7 @@ export default function Hero() {
           className="mt-14 flex flex-col items-center gap-4"
         >
           <span className="text-[10px] uppercase tracking-[0.4em] text-white/40">
-            Scroll to open the box
+            Scroll to switch on the room
           </span>
           <motion.div
             animate={{ y: [0, 10, 0] }}
