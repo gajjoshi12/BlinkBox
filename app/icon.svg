@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="114 -21 280 280" role="img" aria-label="Blink Box Studio">
+  <defs>
+    <mask id="bbM" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="500">
+      <path d="M243 178V125A65 65 0 0 1 373 125V178" stroke="#fff" stroke-width="35" fill="none"/>
+    </mask>
+  </defs>
+  <path d="M243 178V125A65 65 0 0 1 373 125V178" stroke="#B77AC0" stroke-width="35" fill="none"/>
+  <path d="M137.5 178V150A52.75 52.75 0 0 1 243 150V178" stroke="#EA5C6C" stroke-width="37" fill="none"/>
+  <path d="M137.5 178V150A52.75 52.75 0 0 1 243 150V178" stroke="#B73D62" stroke-width="37" fill="none" mask="url(#bbM)"/>
+  <path d="M137.5 178H373" stroke="#F67A60" stroke-width="36"/>
+  <circle cx="137.5" cy="178" r="18.5" fill="#BA1F25"/>
+  <circle cx="243" cy="178" r="18.5" fill="#A9519F"/>
+  <circle cx="373" cy="178" r="18" fill="#415FA8"/></svg>
