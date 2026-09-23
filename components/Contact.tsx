@@ -39,7 +39,17 @@ export default function Contact() {
               <div className="text-white/80">
                 Blinkbox Studio Pvt Ltd
                 <br />
+<<<<<<< HEAD
                 Bengaluru, India
+=======
+                Bajsons Industrial Estate, A-105,
+                <br />
+                Cardinal Gracious Rd, Parshiwada, Kajuwadi,
+                <br />
+                Chakala, Andheri East,
+                <br />
+                Mumbai, Maharashtra 400099
+>>>>>>> protease
               </div>
             </div>
             <div>
@@ -64,12 +74,20 @@ export default function Contact() {
                 Online
               </div>
               <a
+<<<<<<< HEAD
                 href="https://www.blinkboxlighting.com"
+=======
+                href="https://www.blinkboxstudio.com"
+>>>>>>> protease
                 target="_blank"
                 rel="noreferrer"
                 className="text-white/90 hover:text-[rgb(var(--lamp-glow))] transition-colors block"
               >
+<<<<<<< HEAD
                 www.blinkboxlighting.com
+=======
+                www.blinkboxstudio.com
+>>>>>>> protease
               </a>
               <a
                 href="https://www.instagram.com/theblinkboxstudio?igsh=eDF2YzBzODU5eGs1"

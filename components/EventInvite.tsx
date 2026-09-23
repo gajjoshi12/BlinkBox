@@ -270,7 +270,11 @@ export default function EventInvite() {
               {!imageMissing ? (
                 <img
                   src={INVITE_IMAGE_SRC}
+<<<<<<< HEAD
                   alt="BLINKBOX x designPOV — Collaborative Forge invitation"
+=======
+                  alt="Blink Box Studio x designPOV — Collaborative Forge invitation"
+>>>>>>> protease
                   className="block w-full h-auto max-h-[78vh] object-contain"
                   draggable={false}
                   onError={() => setImageMissing(true)}

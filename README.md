@@ -20,7 +20,11 @@ Then open http://localhost:3000.
 
 ## Customize
 
+<<<<<<< HEAD
 - **Brand name & copy** — search the codebase for `BLINK BOX` and project descriptions in [components/Projects.tsx](components/Projects.tsx) / [components/Services.tsx](components/Services.tsx).
+=======
+- **Brand name & copy** — search the codebase for `BLINK BOX STUDIO` and project descriptions in [components/Projects.tsx](components/Projects.tsx) / [components/Services.tsx](components/Services.tsx).
+>>>>>>> protease
 - **Color palette** — `[tailwind.config.ts](tailwind.config.ts)` (Tailwind tokens, see the `blink` namespace) and `[app/globals.css](app/globals.css)` (the `--blink-*` and `--lamp-*` CSS variables that drive the moods).
 - **The studio scene** — `[components/Room.tsx](components/Room.tsx)`. Each lamp has its own `useGlow(scrollYProgress, start, end)` range, so adjust the timing or add/remove fixtures freely.
 - **Real project photos** — replace the placeholder SVG illustrations in [components/Projects.tsx](components/Projects.tsx) with `<Image>` components from `next/image`.

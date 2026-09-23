@@ -31,7 +31,11 @@ const services = [
   {
     n: "05",
     title: "Fabrication & Site",
+<<<<<<< HEAD
     desc: "In-house build at our Bengaluru workshop with FRP experts, lighting electricians, and finest painters working in one room. Dispatch, install, re-weld, refinish.",
+=======
+    desc: "In-house build at our Mumbai workshop with FRP experts, lighting electricians, and finest painters working in one room. Dispatch, install, re-weld, refinish.",
+>>>>>>> protease
     tags: ["Workshop build", "Painting", "Welding", "Site install"],
   },
   {

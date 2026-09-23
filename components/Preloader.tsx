@@ -2,6 +2,10 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+<<<<<<< HEAD
+=======
+import { LOGO_ARCHES, LOGO_BAR, LOGO_COLORS, LOGO_DOTS } from "@/lib/logo";
+>>>>>>> protease
 
 const MIN_VISIBLE_MS = 2500;
 const MAX_VISIBLE_MS = 7000;
@@ -160,11 +164,19 @@ export default function Preloader() {
               transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="mt-7 text-center"
             >
+<<<<<<< HEAD
               <div className="font-display text-4xl md:text-6xl tracking-[0.3em] text-white/95">
                 BLINK BOX
               </div>
               <div className="mt-3 text-[10px] uppercase tracking-[0.5em] text-white/40">
                 Studio · Bespoke architectural lighting
+=======
+              <div className="font-display text-2xl sm:text-4xl lg:text-6xl tracking-[0.18em] sm:tracking-[0.3em] text-white/95">
+                BLINK BOX STUDIO
+              </div>
+              <div className="mt-3 text-[10px] uppercase tracking-[0.5em] text-white/40">
+                Bespoke architectural lighting
+>>>>>>> protease
               </div>
             </motion.div>
 
@@ -219,7 +231,11 @@ export default function Preloader() {
             ◐ Blink Box Studio
           </div>
           <div className="absolute top-8 right-8 text-[9px] uppercase tracking-[0.4em] text-white/25 font-mono">
+<<<<<<< HEAD
             Bengaluru Workshop
+=======
+            Mumbai Workshop
+>>>>>>> protease
           </div>
           <div className="absolute bottom-8 right-8 text-[9px] uppercase tracking-[0.4em] text-white/25 font-mono">
             v · 2026
@@ -257,6 +273,7 @@ function BuildingMark({ progress }: { progress: number }) {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
     >
+<<<<<<< HEAD
       {/* baseline bar — pulses with brand gradient */}
       <motion.rect
         x="14"
@@ -313,6 +330,57 @@ function BuildingMark({ progress }: { progress: number }) {
           />
         );
       })}
+=======
+      {/* Master-logo geometry, scaled into the 120 box */}
+      <g transform="translate(-23.6 20.8) scale(0.33)">
+        {/* coral bar — brightens as loading completes */}
+        <motion.path
+          d={`M${LOGO_BAR.x1} ${LOGO_BAR.y}H${LOGO_BAR.x2}`}
+          stroke={LOGO_COLORS.coral}
+          strokeWidth={LOGO_BAR.width}
+          animate={{
+            opacity: progress > 88 ? 1 : 0.25 + (progress / 88) * 0.5,
+          }}
+        />
+
+        {/* Arches — assemble sequentially */}
+        {[LOGO_ARCHES.red, LOGO_ARCHES.purple].map((a, i) => {
+          const p = archProgress(i);
+          return (
+            <motion.path
+              key={i}
+              d={a.d}
+              stroke={a.color}
+              strokeWidth={a.width}
+              style={{
+                opacity: p,
+                transformBox: "fill-box",
+                transformOrigin: "50% 100%",
+              }}
+              animate={{ scale: 0.4 + p * 0.6, y: (1 - p) * 42 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            />
+          );
+        })}
+
+        {/* Three dots — appear with later arches */}
+        {LOGO_DOTS.map((d, i) => {
+          const p = archProgress(i < 2 ? 2 : 3);
+          return (
+            <motion.circle
+              key={i}
+              cx={d.cx}
+              cy={d.cy}
+              r={d.r}
+              fill={d.fill}
+              animate={{ opacity: p, scale: 0.4 + p * 0.6 }}
+              style={{ transformBox: "fill-box", transformOrigin: "50% 50%" }}
+              transition={{ duration: 0.35 }}
+            />
+          );
+        })}
+      </g>
+>>>>>>> protease
 
       {/* Spinning ring around the whole thing — keeps motion present even at 100% */}
       <motion.circle
@@ -328,6 +396,7 @@ function BuildingMark({ progress }: { progress: number }) {
         style={{ transformOrigin: "60px 60px" }}
       />
 
+<<<<<<< HEAD
       <defs>
         <linearGradient id="bmBaseline" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stopColor="#ed7959" />
@@ -335,6 +404,8 @@ function BuildingMark({ progress }: { progress: number }) {
           <stop offset="100%" stopColor="#2a4cab" />
         </linearGradient>
       </defs>
+=======
+>>>>>>> protease
     </motion.svg>
   );
 }
