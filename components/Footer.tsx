@@ -10,20 +10,12 @@ export default function Footer() {
         <div className="md:col-span-5">
           <a href="/" className="inline-flex items-center gap-3 mb-6">
             <BlinkMark size={32} animated={false} />
-<<<<<<< HEAD
-            <span className="font-display text-xl tracking-[0.26em]">BLINK BOX</span>
-=======
             <span className="font-display text-xl tracking-[0.26em]">BLINK BOX STUDIO</span>
->>>>>>> protease
           </a>
           <p className="text-white/45 text-sm leading-relaxed max-w-sm">
             Bespoke architectural lighting — pendants, centrepieces, and
             volumetric installations — designed, fabricated and commissioned
-<<<<<<< HEAD
-            in-house. Workshop in Bengaluru, by appointment.
-=======
             in-house. Workshop in Andheri East, Mumbai, by appointment.
->>>>>>> protease
           </p>
         </div>
 

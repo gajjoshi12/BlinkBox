@@ -10,11 +10,7 @@ import AiChat from "@/components/AiChat";
 export const metadata: Metadata = {
   title: "Our People — BLINK BOX STUDIO",
   description:
-<<<<<<< HEAD
-    "The hands behind the light — the designers, engineers, and workshop crew of Blink Box Studio, Bengaluru.",
-=======
     "The hands behind the light — the designers, engineers, and workshop crew of Blink Box Studio, Mumbai.",
->>>>>>> protease
 };
 
 export default function TeamPage() {

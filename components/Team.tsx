@@ -236,21 +236,13 @@ const PEOPLE: Person[] = [
     name: "Arti Bhardwaj",
     slug: "arti-bhardwaj",
     photo: "arti-bhardwaj.jpg",
-<<<<<<< HEAD
-    lines: ["Part of the Blink Box family"],
-=======
     lines: ["Part of the Blink Box Studio family"],
->>>>>>> protease
   },
   {
     name: "Kush Sagar Bhardwaj",
     slug: "kush-sagar-bhardwaj",
     photo: "kush-sagar-bhardwaj.jpg",
-<<<<<<< HEAD
-    lines: ["Part of the Blink Box family"],
-=======
     lines: ["Part of the Blink Box Studio family"],
->>>>>>> protease
   },
   {
     name: "Ganesh Ghule",
@@ -398,11 +390,7 @@ export default function Team() {
         {/* Footer note */}
         <div className="mt-24 md:mt-32 thin-line" />
         <p className="mt-8 text-center text-[11px] uppercase tracking-[0.3em] text-white/30">
-<<<<<<< HEAD
-          Bengaluru workshop · By appointment
-=======
           Mumbai workshop · By appointment
->>>>>>> protease
         </p>
       </div>
     </section>

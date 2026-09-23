@@ -33,35 +33,20 @@ export default function Navigation() {
         className="fixed top-0 inset-x-0 z-40 border-b transition-colors"
       >
         <div className="mx-auto max-w-[1400px] px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
-<<<<<<< HEAD
-          <a href="/" className="group flex items-center gap-2.5 md:gap-3">
-            <BlinkMark />
-            <span className="font-display text-base md:text-xl tracking-[0.22em] md:tracking-[0.26em] text-white/95 group-hover:tracking-[0.32em] transition-all duration-500">
-              BLINK BOX
-=======
           <a href="/" className="group flex shrink-0 items-center gap-2.5 md:gap-3">
             <BlinkMark />
             <span className="whitespace-nowrap font-display text-base 2xl:text-xl tracking-[0.2em] 2xl:tracking-[0.26em] text-white/95 2xl:group-hover:tracking-[0.32em] transition-all duration-500">
               BLINK BOX STUDIO
->>>>>>> protease
             </span>
           </a>
 
           {/* desktop links */}
-<<<<<<< HEAD
-          <ul className="hidden md:flex items-center gap-8 lg:gap-10">
-=======
           <ul className="hidden lg:flex items-center gap-5 xl:gap-7 2xl:gap-10">
->>>>>>> protease
             {links.map((l) => (
               <li key={l.href}>
                 <a
                   href={l.href}
-<<<<<<< HEAD
-                  className="text-[12px] uppercase tracking-[0.25em] text-white/60 hover:text-white transition-colors"
-=======
                   className="whitespace-nowrap text-[11px] 2xl:text-[12px] uppercase tracking-[0.18em] 2xl:tracking-[0.25em] text-white/60 hover:text-white transition-colors"
->>>>>>> protease
                 >
                   {l.label}
                 </a>
@@ -70,17 +55,10 @@ export default function Navigation() {
           </ul>
 
           {/* desktop CTA */}
-<<<<<<< HEAD
-          <Magnetic strength={18} className="hidden md:inline-block">
-            <a
-              href="/#contact"
-              className="relative overflow-hidden rounded-full border border-white/15 px-6 py-2.5 text-[11px] uppercase tracking-[0.25em] text-white/80 hover:text-black transition-colors duration-500 group"
-=======
           <Magnetic strength={18} className="hidden xl:inline-block">
             <a
               href="/#contact"
               className="relative inline-block overflow-hidden rounded-full border border-white/15 whitespace-nowrap px-6 py-2.5 text-[11px] uppercase tracking-[0.25em] text-white/80 hover:text-black transition-colors duration-500 group"
->>>>>>> protease
             >
               <span className="relative z-10">Begin a Project</span>
               <span className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--lamp-glow))] to-[var(--lamp-warm)] -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
@@ -90,11 +68,7 @@ export default function Navigation() {
           {/* mobile hamburger */}
           <button
             onClick={() => setOpen(true)}
-<<<<<<< HEAD
-            className="md:hidden flex flex-col items-end justify-center w-9 h-9 gap-1.5"
-=======
             className="lg:hidden flex flex-col items-end justify-center w-9 h-9 gap-1.5"
->>>>>>> protease
             aria-label="Open menu"
           >
             <span className="block h-px w-6 bg-white/85" />
@@ -111,17 +85,10 @@ export default function Navigation() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-<<<<<<< HEAD
-            className="md:hidden fixed inset-0 z-50 bg-black/95 backdrop-blur-xl"
-          >
-            <div className="flex items-center justify-between h-16 px-5 border-b border-white/10">
-              <span className="font-display text-base tracking-[0.24em] text-white/95">BLINK BOX</span>
-=======
             className="lg:hidden fixed inset-0 z-50 bg-black/95 backdrop-blur-xl"
           >
             <div className="flex items-center justify-between h-16 px-5 border-b border-white/10">
               <span className="font-display text-base tracking-[0.24em] text-white/95">BLINK BOX STUDIO</span>
->>>>>>> protease
               <button
                 onClick={() => setOpen(false)}
                 className="w-9 h-9 flex items-center justify-center text-white/75 text-xl"
@@ -166,11 +133,7 @@ export default function Navigation() {
                 Begin a Project →
               </a>
               <div className="mt-8 text-center text-[10px] uppercase tracking-[0.3em] text-white/30">
-<<<<<<< HEAD
-                Bengaluru workshop · By appointment
-=======
                 Mumbai workshop · By appointment
->>>>>>> protease
               </div>
             </motion.div>
           </motion.div>

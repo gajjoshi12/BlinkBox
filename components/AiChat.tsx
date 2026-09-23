@@ -163,11 +163,7 @@ const SEED: Message = {
   id: 0,
   role: "ai",
   text:
-<<<<<<< HEAD
-    "Hi — I'm Lumi, the Blink Box light concierge. Tell me about the room you're lighting, and I'll point you in the right direction.",
-=======
     "Hi — I'm Lumi, the Blink Box Studio light concierge. Tell me about the room you're lighting, and I'll point you in the right direction.",
->>>>>>> protease
 };
 
 // tiny canned-response engine — keeps the demo feeling alive without a backend
@@ -176,11 +172,7 @@ function reply(input: string): string {
   if (/\b(price|cost|budget|quote|how much)\b/.test(q))
     return "Each commission is priced to the piece — typically ₹85k for a small bespoke pendant up to multi-lakh installations for atrium centrepieces. Share the room dimensions and I'll get a studio lead to scope it.";
   if (/\b(lead time|how long|when|deliver|ship)\b/.test(q))
-<<<<<<< HEAD
-    return "Custom pieces take 6–10 weeks from sign-off — we hand-blow the glass and finish the brass in our Bengaluru workshop. International shipping is crated and insured.";
-=======
     return "Custom pieces take 6–10 weeks from sign-off — we hand-blow the glass and finish the brass in our Mumbai workshop. International shipping is crated and insured.";
->>>>>>> protease
   if (/\b(visit|studio|showroom|appointment|book|meet)\b/.test(q))
     return "We host private studio visits Tue–Sat. Drop your city and a window that suits, and the team will confirm a slot within 24 hours.";
   if (/\b(material|brass|glass|finish|wood)\b/.test(q))

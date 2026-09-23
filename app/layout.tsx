@@ -21,11 +21,7 @@ const sans = Inter({
 export const metadata: Metadata = {
   title: "BLINK BOX STUDIO — Bespoke Architectural Lighting",
   description:
-<<<<<<< HEAD
-    "Bespoke pendants, centrepieces, and volumetric lighting installations. Designed, fabricated and commissioned in-house from our Bengaluru workshop.",
-=======
     "Bespoke pendants, centrepieces, and volumetric lighting installations. Designed, fabricated and commissioned in-house from our Mumbai workshop.",
->>>>>>> protease
 };
 
 export const viewport: Viewport = {
