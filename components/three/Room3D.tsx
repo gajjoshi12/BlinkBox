@@ -1,6 +1,7 @@
 "use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { PerformanceMonitor } from "@react-three/drei";
 import { useRef, useEffect, useMemo, Suspense, useState } from "react";
 import * as THREE from "three";
 import { useTemperature } from "../TemperatureProvider";
@@ -106,47 +107,47 @@ function Shell() {
       {/* Back wall */}
       <mesh position={[0, 4, -5]}>
         <planeGeometry args={[18, 8]} />
-        <meshStandardMaterial color={wallColor} roughness={0.95} />
+        <meshLambertMaterial color={wallColor} />
       </mesh>
 
       {/* Left wall */}
       <mesh rotation={[0, Math.PI / 2, 0]} position={[-9, 4, 0]}>
         <planeGeometry args={[10, 8]} />
-        <meshStandardMaterial color={wallColor} roughness={0.95} />
+        <meshLambertMaterial color={wallColor} />
       </mesh>
 
       {/* Right wall */}
       <mesh rotation={[0, -Math.PI / 2, 0]} position={[9, 4, 0]}>
         <planeGeometry args={[10, 8]} />
-        <meshStandardMaterial color={wallColor} roughness={0.95} />
+        <meshLambertMaterial color={wallColor} />
       </mesh>
 
       {/* Ceiling */}
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 8, 0]}>
         <planeGeometry args={[18, 14]} />
-        <meshStandardMaterial color="#0a0806" roughness={0.95} />
+        <meshLambertMaterial color="#0a0806" />
       </mesh>
 
       {/* Floor rug — layered for depth */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.005, -1]}>
         <planeGeometry args={[6, 4]} />
-        <meshStandardMaterial color="#4a3220" roughness={1} />
+        <meshLambertMaterial color="#4a3220" />
       </mesh>
       {/* rug border */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.006, -1]}>
         <ringGeometry args={[2.6, 2.85, 32]} />
-        <meshStandardMaterial color="#3a2418" roughness={1} side={THREE.DoubleSide} />
+        <meshLambertMaterial color="#3a2418" side={THREE.DoubleSide} />
       </mesh>
       {/* central rug medallion */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.007, -1]}>
         <ringGeometry args={[0.6, 0.9, 24]} />
-        <meshStandardMaterial color="#6a4828" roughness={1} side={THREE.DoubleSide} />
+        <meshLambertMaterial color="#6a4828" side={THREE.DoubleSide} />
       </mesh>
 
       {/* Skirting board hint — thin strip at floor */}
       <mesh position={[0, 0.08, -4.97]}>
         <boxGeometry args={[18, 0.16, 0.04]} />
-        <meshStandardMaterial color="#0a0604" />
+        <meshLambertMaterial color="#0a0604" />
       </mesh>
     </group>
   );
@@ -162,7 +163,7 @@ function Window() {
       {/* Frame */}
       <mesh>
         <boxGeometry args={[2.4, 3.2, 0.06]} />
-        <meshStandardMaterial color="#0a0604" />
+        <meshLambertMaterial color="#0a0604" />
       </mesh>
       {/* Glass panes - 4 lit panels */}
       {[
@@ -173,7 +174,7 @@ function Window() {
       ].map(([x, y], i) => (
         <mesh key={i} position={[x, y, 0.04]}>
           <planeGeometry args={[1.0, 1.4]} />
-          <meshStandardMaterial
+          <meshLambertMaterial
             color="#1a3060"
             emissive="#5278b8"
             emissiveIntensity={0.5}
@@ -184,11 +185,11 @@ function Window() {
       {/* Mullions */}
       <mesh>
         <boxGeometry args={[0.06, 3.2, 0.1]} />
-        <meshStandardMaterial color="#0a0604" />
+        <meshLambertMaterial color="#0a0604" />
       </mesh>
       <mesh>
         <boxGeometry args={[2.4, 0.06, 0.1]} />
-        <meshStandardMaterial color="#0a0604" />
+        <meshLambertMaterial color="#0a0604" />
       </mesh>
       {/* Cool moonlight cast into the room */}
       <pointLight
@@ -212,50 +213,50 @@ function Sofa() {
       {/* base */}
       <mesh position={[0, 0.42, 0]} castShadow>
         <boxGeometry args={[4.2, 0.6, 1.5]} />
-        <meshStandardMaterial color={sofaColor} roughness={0.95} />
+        <meshLambertMaterial color={sofaColor} />
       </mesh>
       {/* back rest */}
       <mesh position={[0, 1.05, -0.55]} castShadow>
         <boxGeometry args={[4.2, 0.9, 0.35]} />
-        <meshStandardMaterial color={sofaColor} roughness={0.95} />
+        <meshLambertMaterial color={sofaColor} />
       </mesh>
       {/* left arm */}
       <mesh position={[-2.0, 0.75, 0]} castShadow>
         <boxGeometry args={[0.3, 0.9, 1.5]} />
-        <meshStandardMaterial color={sofaColor} roughness={0.95} />
+        <meshLambertMaterial color={sofaColor} />
       </mesh>
       {/* right arm */}
       <mesh position={[2.0, 0.75, 0]} castShadow>
         <boxGeometry args={[0.3, 0.9, 1.5]} />
-        <meshStandardMaterial color={sofaColor} roughness={0.95} />
+        <meshLambertMaterial color={sofaColor} />
       </mesh>
       {/* seat cushions */}
       {[-1.3, 0, 1.3].map((x, i) => (
         <mesh key={i} position={[x, 0.78, 0.08]} castShadow>
           <boxGeometry args={[1.18, 0.18, 1.28]} />
-          <meshStandardMaterial color={cushionColor} roughness={0.92} />
+          <meshLambertMaterial color={cushionColor} />
         </mesh>
       ))}
       {/* back cushions */}
       {[-1.3, 0, 1.3].map((x, i) => (
         <mesh key={i} position={[x, 1.15, -0.36]} rotation={[-0.1, 0, 0]} castShadow>
           <boxGeometry args={[1.18, 0.55, 0.18]} />
-          <meshStandardMaterial color={cushionColor} roughness={0.92} />
+          <meshLambertMaterial color={cushionColor} />
         </mesh>
       ))}
       {/* throw pillows — varied warm tones */}
       <mesh position={[-1.5, 1.0, 0.0]} rotation={[-0.2, 0.1, 0.3]} castShadow>
         <boxGeometry args={[0.45, 0.45, 0.2]} />
-        <meshStandardMaterial color="#a8703a" roughness={0.85} />
+        <meshLambertMaterial color="#a8703a" />
       </mesh>
       <mesh position={[1.6, 1.0, 0.0]} rotation={[-0.2, -0.2, -0.2]} castShadow>
         <boxGeometry args={[0.45, 0.45, 0.2]} />
-        <meshStandardMaterial color="#7a4a28" roughness={0.85} />
+        <meshLambertMaterial color="#7a4a28" />
       </mesh>
       {/* a small folded throw blanket draped over one arm */}
       <mesh position={[-1.7, 0.95, 0.4]} rotation={[0, 0, -0.1]} castShadow>
         <boxGeometry args={[0.5, 0.06, 0.7]} />
-        <meshStandardMaterial color="#d4a878" roughness={0.95} />
+        <meshLambertMaterial color="#d4a878" />
       </mesh>
       {/* small brass feet */}
       {[-1.9, 1.9].map((x) =>
@@ -293,11 +294,11 @@ function CoffeeTable() {
       {/* a stack of books */}
       <mesh position={[-0.35, 0.5, 0]} castShadow>
         <boxGeometry args={[0.35, 0.12, 0.24]} />
-        <meshStandardMaterial color="#3a2418" roughness={0.7} />
+        <meshLambertMaterial color="#3a2418" />
       </mesh>
       <mesh position={[-0.35, 0.59, 0.04]} castShadow>
         <boxGeometry args={[0.32, 0.06, 0.22]} />
-        <meshStandardMaterial color="#6a4828" roughness={0.7} />
+        <meshLambertMaterial color="#6a4828" />
       </mesh>
       {/* small decorative bowl */}
       <mesh position={[0.4, 0.48, -0.1]} castShadow>
@@ -353,7 +354,7 @@ function Console({
       {/* a stem of pampas */}
       <mesh position={[-0.7, 1.55, 0]}>
         <coneGeometry args={[0.08, 0.4, 8]} />
-        <meshStandardMaterial color="#6a5a45" roughness={1} />
+        <meshLambertMaterial color="#6a5a45" />
       </mesh>
     </group>
   );
@@ -370,16 +371,16 @@ function ArtPiece() {
       {/* canvas */}
       <mesh position={[0, 0, 0.035]}>
         <planeGeometry args={[1.4, 2.0]} />
-        <meshStandardMaterial color="#251a14" roughness={0.7} />
+        <meshLambertMaterial color="#251a14" />
       </mesh>
       {/* abstract gestures */}
       <mesh position={[-0.2, 0.1, 0.04]} rotation={[0, 0, 0.3]}>
         <planeGeometry args={[1.0, 0.04]} />
-        <meshStandardMaterial color="#8a3018" emissive="#8a3018" emissiveIntensity={0.1} />
+        <meshLambertMaterial color="#8a3018" emissive="#8a3018" emissiveIntensity={0.1} />
       </mesh>
       <mesh position={[0.1, -0.3, 0.04]} rotation={[0, 0, -0.2]}>
         <planeGeometry args={[0.8, 0.03]} />
-        <meshStandardMaterial color={brassColor} emissive="#d4a24a" emissiveIntensity={0.2} />
+        <meshLambertMaterial color={brassColor} emissive="#d4a24a" emissiveIntensity={0.2} />
       </mesh>
     </group>
   );
@@ -416,22 +417,22 @@ function FiddleLeafFig({ position }: { position: [number, number, number] }) {
       {/* terracotta pot */}
       <mesh position={[0, 0.25, 0]} castShadow>
         <cylinderGeometry args={[0.38, 0.32, 0.5, 24]} />
-        <meshStandardMaterial color="#5a3020" roughness={0.85} />
+        <meshLambertMaterial color="#5a3020" />
       </mesh>
       {/* pot rim */}
       <mesh position={[0, 0.5, 0]} castShadow>
         <torusGeometry args={[0.38, 0.04, 8, 24]} />
-        <meshStandardMaterial color="#3a1a0e" roughness={0.7} />
+        <meshLambertMaterial color="#3a1a0e" />
       </mesh>
       {/* soil */}
       <mesh position={[0, 0.49, 0]}>
         <cylinderGeometry args={[0.36, 0.36, 0.02, 24]} />
-        <meshStandardMaterial color="#1a0e08" roughness={1} />
+        <meshLambertMaterial color="#1a0e08" />
       </mesh>
       {/* trunk */}
       <mesh position={[0, 1.7, 0]} castShadow>
         <cylinderGeometry args={[0.045, 0.06, 2.4, 10]} />
-        <meshStandardMaterial color="#3a2818" roughness={0.85} />
+        <meshLambertMaterial color="#3a2818" />
       </mesh>
       {/* leaves — large oval shapes around the trunk */}
       {leaves.map((l, i) => {
@@ -445,10 +446,9 @@ function FiddleLeafFig({ position }: { position: [number, number, number] }) {
             rotation={[l.tilt, l.angle, 0.2]}
           >
             <mesh castShadow>
-              <sphereGeometry args={[l.size, 12, 8]} />
-              <meshStandardMaterial
+              <sphereGeometry args={[l.size, 32, 24]} />
+              <meshLambertMaterial
                 color={i % 2 === 0 ? leafColor : leafColorLight}
-                roughness={0.7}
                 side={THREE.DoubleSide}
               />
             </mesh>
@@ -465,8 +465,8 @@ function FiddleLeafFig({ position }: { position: [number, number, number] }) {
             position={[Math.cos(a) * 0.15, 3.1, Math.sin(a) * 0.15]}
             rotation={[0.3, a, 0.4]}
                      >
-            <sphereGeometry args={[0.45, 12, 8]} />
-            <meshStandardMaterial color={leafColorLight} roughness={0.7} />
+            <sphereGeometry args={[0.45, 32, 24]} />
+            <meshLambertMaterial color={leafColorLight} />
           </mesh>
         );
       })}
@@ -491,7 +491,7 @@ function Monstera({ position }: { position: [number, number, number] }) {
       {/* soil */}
       <mesh position={[0, 0.35, 0]}>
         <cylinderGeometry args={[0.4, 0.4, 0.02, 24]} />
-        <meshStandardMaterial color="#1a0e08" roughness={1} />
+        <meshLambertMaterial color="#1a0e08" />
       </mesh>
       {/* large monstera-style leaves — broad ellipses on stems */}
       {Array.from({ length: 8 }).map((_, i) => {
@@ -511,14 +511,13 @@ function Monstera({ position }: { position: [number, number, number] }) {
             {/* stem */}
             <mesh position={[0, reach / 2, 0]}>
               <cylinderGeometry args={[0.015, 0.015, reach, 6]} />
-              <meshStandardMaterial color="#2a4a28" roughness={0.7} />
+              <meshLambertMaterial color="#2a4a28" />
             </mesh>
             {/* big leaf */}
             <mesh position={[0, reach, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
               <circleGeometry args={[0.35, 16]} />
-              <meshStandardMaterial
+              <meshLambertMaterial
                 color={leafColorLight}
-                roughness={0.6}
                 side={THREE.DoubleSide}
               />
             </mesh>
@@ -551,7 +550,7 @@ function SnakePlant({ position }: { position: [number, number, number] }) {
           rotation={[b.tilt, b.angle, b.tilt * 0.5]}
                  >
           <coneGeometry args={[0.03, b.h, 4]} />
-          <meshStandardMaterial color={leafColor} roughness={0.7} />
+          <meshLambertMaterial color={leafColor} />
         </mesh>
       ))}
     </group>
@@ -572,26 +571,26 @@ function Bookshelf({ position }: { position: [number, number, number] }) {
       {/* outer frame — vertical sides */}
       <mesh position={[-1, 3, 0]} castShadow>
         <boxGeometry args={[0.06, 6, 0.5]} />
-        <meshStandardMaterial color="#2a1810" roughness={0.7} />
+        <meshLambertMaterial color="#2a1810" />
       </mesh>
       <mesh position={[1, 3, 0]} castShadow>
         <boxGeometry args={[0.06, 6, 0.5]} />
-        <meshStandardMaterial color="#2a1810" roughness={0.7} />
+        <meshLambertMaterial color="#2a1810" />
       </mesh>
       {/* top */}
       <mesh position={[0, 6, 0]} castShadow>
         <boxGeometry args={[2.06, 0.08, 0.5]} />
-        <meshStandardMaterial color="#2a1810" roughness={0.7} />
+        <meshLambertMaterial color="#2a1810" />
       </mesh>
       {/* bottom */}
       <mesh position={[0, 0, 0]} castShadow>
         <boxGeometry args={[2.06, 0.08, 0.5]} />
-        <meshStandardMaterial color="#2a1810" roughness={0.7} />
+        <meshLambertMaterial color="#2a1810" />
       </mesh>
       {/* back panel */}
       <mesh position={[0, 3, -0.22]}>
         <boxGeometry args={[2, 6, 0.03]} />
-        <meshStandardMaterial color="#150f0a" roughness={0.9} />
+        <meshLambertMaterial color="#150f0a" />
       </mesh>
 
       {/* shelves + books on each */}
@@ -600,7 +599,7 @@ function Bookshelf({ position }: { position: [number, number, number] }) {
           {/* the shelf board */}
           <mesh position={[0, 0, 0]} castShadow>
             <boxGeometry args={[1.95, 0.04, 0.46]} />
-            <meshStandardMaterial color="#2a1810" roughness={0.7} />
+            <meshLambertMaterial color="#2a1810" />
           </mesh>
           {/* rows of books — pack tightly with varied heights */}
           {(() => {
@@ -619,7 +618,7 @@ function Bookshelf({ position }: { position: [number, number, number] }) {
                   rotation={[0, 0, tiltLast ? 0.15 : 0]}
                                  >
                   <boxGeometry args={[w, h, 0.3]} />
-                  <meshStandardMaterial color={color} roughness={0.7} />
+                  <meshLambertMaterial color={color} />
                 </mesh>
               );
               x += w + 0.005;
@@ -632,11 +631,11 @@ function Bookshelf({ position }: { position: [number, number, number] }) {
                 <group key="hstack" position={[0.7, 0.06, 0]}>
                   <mesh castShadow>
                     <boxGeometry args={[0.25, 0.08, 0.3]} />
-                    <meshStandardMaterial color={bookColors[si]} roughness={0.7} />
+                    <meshLambertMaterial color={bookColors[si]} />
                   </mesh>
                   <mesh position={[0, 0.085, 0]} castShadow>
                     <boxGeometry args={[0.24, 0.07, 0.28]} />
-                    <meshStandardMaterial color={bookColors[si + 1]} roughness={0.7} />
+                    <meshLambertMaterial color={bookColors[si + 1]} />
                   </mesh>
                 </group>
               );
@@ -691,12 +690,12 @@ function SideTable({ position }: { position: [number, number, number] }) {
       {/* a candle on top */}
       <mesh position={[0.1, 0.7, 0.05]} castShadow>
         <cylinderGeometry args={[0.04, 0.04, 0.12, 12]} />
-        <meshStandardMaterial color="#e8d8b0" roughness={0.8} />
+        <meshLambertMaterial color="#e8d8b0" />
       </mesh>
       {/* a small book */}
       <mesh position={[-0.12, 0.66, -0.05]} rotation={[0, 0.3, 0]} castShadow>
         <boxGeometry args={[0.2, 0.04, 0.15]} />
-        <meshStandardMaterial color="#6a3a1a" roughness={0.7} />
+        <meshLambertMaterial color="#6a3a1a" />
       </mesh>
     </group>
   );
@@ -725,31 +724,31 @@ function Fireplace({ intensity }: { intensity: number }) {
       {/* mantle */}
       <mesh position={[0, 1.5, 0]} castShadow>
         <boxGeometry args={[2.6, 0.12, 0.5]} />
-        <meshStandardMaterial color="#2a1810" roughness={0.8} />
+        <meshLambertMaterial color="#2a1810" />
       </mesh>
       {/* outer surround */}
       <mesh castShadow>
         <boxGeometry args={[2.4, 2.6, 0.2]} />
-        <meshStandardMaterial color="#0d0806" roughness={0.9} />
+        <meshLambertMaterial color="#0d0806" />
       </mesh>
       {/* inner opening */}
       <mesh position={[0, -0.1, 0.11]}>
         <boxGeometry args={[1.6, 1.6, 0.05]} />
-        <meshStandardMaterial color="#000000" />
+        <meshLambertMaterial color="#000000" />
       </mesh>
       {/* logs */}
       <mesh position={[-0.25, -0.7, 0.15]} rotation={[0, 0, 0.1]} castShadow>
         <cylinderGeometry args={[0.08, 0.08, 0.7, 8]} />
-        <meshStandardMaterial color="#1a0e08" roughness={0.95} />
+        <meshLambertMaterial color="#1a0e08" />
       </mesh>
       <mesh position={[0.2, -0.65, 0.15]} rotation={[0, 0, -0.15]} castShadow>
         <cylinderGeometry args={[0.07, 0.07, 0.6, 8]} />
-        <meshStandardMaterial color="#1a0e08" roughness={0.95} />
+        <meshLambertMaterial color="#1a0e08" />
       </mesh>
       {/* the fire itself - emissive sphere */}
       <mesh ref={fireRef} position={[0, -0.35, 0.2]}>
-        <sphereGeometry args={[0.35, 16, 16]} />
-        <meshStandardMaterial
+        <sphereGeometry args={[0.35, 32, 24]} />
+        <meshLambertMaterial
           color="#ff5a1f"
           emissive="#ff9040"
           emissiveIntensity={intensity * 5}
@@ -758,7 +757,7 @@ function Fireplace({ intensity }: { intensity: number }) {
       </mesh>
       {/* secondary embers glow */}
       <mesh position={[0, -0.55, 0.25]}>
-        <sphereGeometry args={[0.45, 16, 16]} />
+        <sphereGeometry args={[0.45, 32, 24]} />
         <meshBasicMaterial
           color="#ff7030"
           transparent
@@ -806,7 +805,7 @@ function Chandelier({
       {/* cord */}
       <mesh position={[0, 1.6, 0]}>
         <cylinderGeometry args={[0.012, 0.012, 3.2, 8]} />
-        <meshStandardMaterial color="#0a0604" />
+        <meshLambertMaterial color="#0a0604" />
       </mesh>
       {/* canopy at ceiling */}
       <mesh position={[0, 3.2, 0]}>
@@ -851,7 +850,7 @@ function Chandelier({
             </mesh>
             {/* ball joint */}
             <mesh position={[0.04, 0.06, 0]}>
-              <sphereGeometry args={[0.045, 10, 10]} />
+              <sphereGeometry args={[0.045, 32, 24]} />
               <meshStandardMaterial color={brassColor} metalness={1} roughness={0.32} />
             </mesh>
             {/* candle cup */}
@@ -862,12 +861,12 @@ function Chandelier({
             {/* candle stick */}
             <mesh position={[x, 0.27, z]}>
               <cylinderGeometry args={[0.022, 0.022, 0.14, 10]} />
-              <meshStandardMaterial color="#f5e6c8" />
+              <meshLambertMaterial color="#f5e6c8" />
             </mesh>
             {/* bulb */}
             <mesh position={[x, 0.4, z]}>
-              <sphereGeometry args={[0.055, 14, 14]} />
-              <meshStandardMaterial
+              <sphereGeometry args={[0.055, 32, 24]} />
+              <meshLambertMaterial
                 color={color}
                 emissive={color}
                 emissiveIntensity={intensity * 5}
@@ -876,7 +875,7 @@ function Chandelier({
             </mesh>
             {/* glow shell */}
             <mesh position={[x, 0.4, z]}>
-              <sphereGeometry args={[0.13, 10, 10]} />
+              <sphereGeometry args={[0.13, 32, 24]} />
               <meshBasicMaterial
                 color={color}
                 transparent
@@ -923,19 +922,18 @@ function TableLamp({
       {/* shade — wide cone */}
       <mesh position={[0, 0.5, 0]} castShadow>
         <coneGeometry args={[0.24, 0.32, 32, 1, true]} />
-        <meshStandardMaterial
+        <meshLambertMaterial
           color="#3a2818"
           emissive={color}
           emissiveIntensity={intensity * 1.8}
           side={THREE.DoubleSide}
-          roughness={0.6}
           toneMapped={false}
         />
       </mesh>
       {/* under-shade glow */}
       <mesh position={[0, 0.38, 0]}>
-        <sphereGeometry args={[0.08, 12, 12]} />
-        <meshStandardMaterial
+        <sphereGeometry args={[0.08, 32, 24]} />
+        <meshLambertMaterial
           color={color}
           emissive={color}
           emissiveIntensity={intensity * 4}
@@ -983,30 +981,29 @@ function FloorLamp({
       </mesh>
       {/* tassel knob */}
       <mesh position={[0, 2.32, 0]}>
-        <sphereGeometry args={[0.04, 12, 12]} />
+        <sphereGeometry args={[0.04, 32, 24]} />
         <meshStandardMaterial color={brassColor} metalness={1} roughness={0.3} />
       </mesh>
       {/* shade — drum */}
       <mesh position={[0, 2.7, 0]} castShadow>
         <cylinderGeometry args={[0.34, 0.28, 0.5, 32, 1, true]} />
-        <meshStandardMaterial
+        <meshLambertMaterial
           color="#3a2818"
           emissive={color}
           emissiveIntensity={intensity * 1.8}
           side={THREE.DoubleSide}
-          roughness={0.6}
           toneMapped={false}
         />
       </mesh>
       {/* shade top ring */}
       <mesh position={[0, 2.95, 0]}>
         <ringGeometry args={[0.0, 0.34, 32]} />
-        <meshStandardMaterial color="#1a1208" side={THREE.DoubleSide} />
+        <meshLambertMaterial color="#1a1208" side={THREE.DoubleSide} />
       </mesh>
       {/* inner bulb */}
       <mesh position={[0, 2.7, 0]}>
-        <sphereGeometry args={[0.1, 14, 14]} />
-        <meshStandardMaterial
+        <sphereGeometry args={[0.1, 32, 24]} />
+        <meshLambertMaterial
           color={color}
           emissive={color}
           emissiveIntensity={intensity * 4}
@@ -1048,7 +1045,7 @@ function Sconce({
       {/* shade - small cone */}
       <mesh position={[0, 0.05, 0.25]}>
         <coneGeometry args={[0.12, 0.2, 20, 1, true]} />
-        <meshStandardMaterial
+        <meshLambertMaterial
           color="#3a2818"
           emissive={color}
           emissiveIntensity={intensity * 1.6}
@@ -1058,8 +1055,8 @@ function Sconce({
       </mesh>
       {/* bulb */}
       <mesh position={[0, 0.0, 0.28]}>
-        <sphereGeometry args={[0.045, 12, 12]} />
-        <meshStandardMaterial
+        <sphereGeometry args={[0.045, 32, 24]} />
+        <meshLambertMaterial
           color={color}
           emissive={color}
           emissiveIntensity={intensity * 4}
@@ -1093,7 +1090,7 @@ function Cove({
       {/* glowing strip along the back wall top */}
       <mesh position={[0, 7.7, -4.95]}>
         <boxGeometry args={[16, 0.08, 0.04]} />
-        <meshStandardMaterial
+        <meshLambertMaterial
           color={color}
           emissive={color}
           emissiveIntensity={intensity * 3}
@@ -1433,27 +1430,27 @@ function FireplaceWithIntensityRef({
     <group position={[5.5, 0.8, -4.65]}>
       <mesh position={[0, 1.5, 0]} castShadow>
         <boxGeometry args={[2.6, 0.12, 0.5]} />
-        <meshStandardMaterial color="#2a1810" roughness={0.8} />
+        <meshLambertMaterial color="#2a1810" />
       </mesh>
       <mesh castShadow>
         <boxGeometry args={[2.4, 2.6, 0.2]} />
-        <meshStandardMaterial color="#0d0806" roughness={0.9} />
+        <meshLambertMaterial color="#0d0806" />
       </mesh>
       <mesh position={[0, -0.1, 0.11]}>
         <boxGeometry args={[1.6, 1.6, 0.05]} />
-        <meshStandardMaterial color="#000000" />
+        <meshLambertMaterial color="#000000" />
       </mesh>
       <mesh position={[-0.25, -0.7, 0.15]} rotation={[0, 0, 0.1]} castShadow>
         <cylinderGeometry args={[0.08, 0.08, 0.7, 8]} />
-        <meshStandardMaterial color="#1a0e08" roughness={0.95} />
+        <meshLambertMaterial color="#1a0e08" />
       </mesh>
       <mesh position={[0.2, -0.65, 0.15]} rotation={[0, 0, -0.15]} castShadow>
         <cylinderGeometry args={[0.07, 0.07, 0.6, 8]} />
-        <meshStandardMaterial color="#1a0e08" roughness={0.95} />
+        <meshLambertMaterial color="#1a0e08" />
       </mesh>
       <mesh ref={fireRef} position={[0, -0.35, 0.2]}>
-        <sphereGeometry args={[0.35, 16, 16]} />
-        <meshStandardMaterial
+        <sphereGeometry args={[0.35, 32, 24]} />
+        <meshLambertMaterial
           color="#ff5a1f"
           emissive="#ff9040"
           emissiveIntensity={0}
@@ -1496,6 +1493,8 @@ function CoveAnimated({
 /* Top-level export                                              */
 /* ============================================================ */
 
+
+
 export default function Room3D() {
   // Pause rendering when tab is hidden — saves GPU when user switches away.
   const [active, setActive] = useState(true);
@@ -1505,18 +1504,44 @@ export default function Room3D() {
     return () => document.removeEventListener("visibilitychange", onVis);
   }, []);
 
+  // Resolution: render near the screen's real pixel density so the room
+  // stays crisp on scaled / HiDPI displays (the old fixed 1x was upscaled and
+  // looked pixelated). Start at <=1.5x, then PerformanceMonitor nudges it in
+  // 0.25 steps: up to 2x (1.5x on touch) with headroom, down to 1x without.
+  // Only client-rendered (ssr: false), so window is available here.
+  const [{ minDpr, maxDpr, antialias }] = useState(() => {
+    const ratio = window.devicePixelRatio || 1;
+    const touch = window.matchMedia("(pointer: coarse)").matches;
+    return {
+      minDpr: 1,
+      maxDpr: Math.max(1, Math.min(ratio, touch ? 1.5 : 2)),
+      // MSAA only on 1x screens; on HiDPI the extra resolution smooths
+      // edges and MSAA would double the fill cost.
+      antialias: ratio < 1.5,
+    };
+  });
+  const [dpr, setDpr] = useState(() => Math.min(maxDpr, 1.5));
+
   return (
     <Canvas
       frameloop={active ? "always" : "never"}
       camera={{ position: [0, 2, 7], fov: 50 }}
       gl={{
-        antialias: false,
+        antialias,
         powerPreference: "high-performance",
         toneMapping: THREE.ACESFilmicToneMapping,
         toneMappingExposure: 1.15,
       }}
-      dpr={[1, 1]}
+      dpr={dpr}
     >
+      {/* Default bounds need >60fps to step up, unreachable on 60Hz screens */}
+      <PerformanceMonitor
+        bounds={() => [45, 57]}
+        onIncline={() => setDpr((d) => Math.min(maxDpr, d + 0.25))}
+        onDecline={() => setDpr((d) => Math.max(minDpr, d - 0.25))}
+        flipflops={8}
+        onFallback={() => setDpr(minDpr)}
+      />
       <fog attach="fog" args={["#0a0810", 20, 40]} />
       <color attach="background" args={["#0a0810"]} />
       <Suspense fallback={null}>

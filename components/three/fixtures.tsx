@@ -24,7 +24,7 @@ function Bulb({
   return (
     <group>
       <mesh>
-        <sphereGeometry args={[bulbSize, 18, 18]} />
+        <sphereGeometry args={[bulbSize, 32, 24]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
@@ -34,7 +34,7 @@ function Bulb({
       </mesh>
       {/* outer glow shell */}
       <mesh>
-        <sphereGeometry args={[glowSize, 18, 18]} />
+        <sphereGeometry args={[glowSize, 32, 24]} />
         <meshBasicMaterial
           color={color}
           transparent
@@ -44,7 +44,7 @@ function Bulb({
         />
       </mesh>
       <mesh>
-        <sphereGeometry args={[glowSize * 1.8, 18, 18]} />
+        <sphereGeometry args={[glowSize * 1.8, 32, 24]} />
         <meshBasicMaterial
           color={color}
           transparent
@@ -143,7 +143,7 @@ export function CrownChandelier({
             </mesh>
             {/* small ball joint where arm leaves the column */}
             <mesh position={[0.05, 0.08, 0]}>
-              <sphereGeometry args={[0.05, 12, 12]} />
+              <sphereGeometry args={[0.05, 32, 24]} />
               {brassMaterial}
             </mesh>
             {/* candle-cup at end of arm */}
@@ -255,7 +255,7 @@ export function LinearPendant({
             </mesh>
             {/* edison-style bulb */}
             <mesh position={[0, -0.05, 0]}>
-              <sphereGeometry args={[0.08, 18, 18]} />
+              <sphereGeometry args={[0.08, 32, 24]} />
               <meshStandardMaterial
                 color={color}
                 emissive={color}
@@ -328,7 +328,7 @@ export function CascadeChandelier({
       {[-0.6, -0.2, 0.2, 0.6].map((y) => (
         <group key={y} position={[0, y, 0]}>
           <mesh>
-            <sphereGeometry args={[0.08, 16, 16]} />
+            <sphereGeometry args={[0.08, 32, 24]} />
             <meshStandardMaterial
               color={color}
               emissive={color}
